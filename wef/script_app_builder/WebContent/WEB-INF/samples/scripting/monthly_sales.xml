@@ -1,0 +1,11 @@
+<SalesData>
+<MonthData>
+<Month>January</Month><Goal>4000</Goal><Actual>1251</Actual>
+</MonthData>
+<MonthData>
+<Month>February</Month><Goal>5000</Goal><Actual>6733</Actual>
+</MonthData>
+<MonthData>
+<Month>March</Month><Goal>5000</Goal><Actual>7854</Actual>
+</MonthData>
+</SalesData>

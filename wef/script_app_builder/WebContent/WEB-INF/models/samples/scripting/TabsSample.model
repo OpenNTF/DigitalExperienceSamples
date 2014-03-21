@@ -1,0 +1,70 @@
+<Model id="samples/scripting/TabsSample"><BuilderCallList><BuilderCall id="bc7"><BuilderDefID>com.bowstreet.builders.core.Comment</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallCategory">General</Input>
+<Input name="Name">Copyright</Input>
+<Input name="BuilderCallEnabled">true</Input>
+<Input name="BuilderCallComment">Copyright 2014  IBM Corp. 
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</Input>
+<Input name="Comment">Copyright 2014  IBM Corp. 
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc4"><BuilderDefID>com.bowstreet.adapters.builders.PortletAdapterBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="PortletDefaultLocale">en</Input>
+<Input name="PortletAdditionalLocales">en</Input>
+<Input name="CustomEditPageType">None</Input>
+<Input name="CustomEditDefaultsPageType">None</Input>
+<Input name="CustomConfigurePageType">None</Input>
+<Input name="RCPLaunchMenu">none</Input>
+<Input name="RCPTitleBar">show</Input>
+<Input name="RCPViewType">portlet</Input>
+<Input name="Name">Tabs Sample</Input>
+<Input name="PortletTitle">Tabs Sample</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc5"><BuilderDefID>com.ibm.wef.samples.builders.ScriptApplicationBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="AddServiceProviderSupport">false</Input>
+<Input name="PageName">main</Input>
+<Input name="HtmlFile">/samples/scripting/tabs_sample.html</Input>
+<Input name="DefaultName">main</Input>
+<Input name="ScriptFile">/samples/scripting/tabs_sample.js</Input>
+<Input name="Libraries"><top><LibraryEntry><Library>jquery</Library>
+</LibraryEntry>
+<LibraryEntry><Library>jquery-ui</Library>
+</LibraryEntry>
+</top>
+</Input>
+</Inputs>
+</BuilderCall>
+</BuilderCallList>
+<Properties><Contained>false</Contained>
+</Properties>
+<Dependencies><Dependency type="File">/samples/scripting/tabs_sample.html</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery.html</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery-ui.html</Dependency>
+<Dependency type="File">/samples/scripting/tabs_sample.js</Dependency>
+</Dependencies>
+<ExternalProperties><ExternalProperty id="PortletModel">true</ExternalProperty>
+<ExternalProperty id="PortletName">Tabs Sample</ExternalProperty>
+<ExternalProperty id="PortletTitle">Tabs Sample</ExternalProperty>
+<ExternalProperty id="PortletDefaultLocale">en</ExternalProperty>
+<ExternalProperty id="PortletAdditionalLocales">en</ExternalProperty>
+<ExternalProperty id="TestPortalPage"></ExternalProperty>
+<ExternalProperty id="PortletModeEdit">false</ExternalProperty>
+<ExternalProperty id="PortletModeEditDefaults">false</ExternalProperty>
+<ExternalProperty id="PortletModeConfig">false</ExternalProperty>
+<ExternalProperty id="PortletModeHelp">false</ExternalProperty>
+</ExternalProperties>
+</Model>

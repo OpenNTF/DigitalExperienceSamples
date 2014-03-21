@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<BuilderDef xmlns="http://www.bowstreet.com/2001/Schemas" id="com.ibm.wef.samples.builders.ScriptApplicationBuilder"> 
+  <ReadableName>Script Application</ReadableName> 
+  <GenHandlerClassName>com.bowstreet.builders.webapp.foundation.WebAppGenHandler</GenHandlerClassName> 
+  <HelpFile /> 
+  <RequiredFactoryVersion>5.6.0</RequiredFactoryVersion> 
+  <Description>Generates a JS-based application page using a library such as JQuery.  Optionally provides JS access to the Data Service operations in a Service Provider model. 
+</Description> 
+  <Domains> 
+    <Domain>WebApp</Domain> 
+  </Domains> 
+  <CreateModifyList /> 
+  <Category>Custom Builders</Category> 
+  <Keywords /> 
+  <BuilderData> 
+    <BuilderDataEntry name="BuilderClassName">com.ibm.wef.samples.builders.ScriptApplicationBuilder</BuilderDataEntry> 
+  </BuilderData> 
+  <CoordinatorClassName>com.ibm.wef.samples.builders.ScriptApplicationCoordinator</CoordinatorClassName> 
+  <InputDefinitions> 
+    <InputDefinition name="Name" base="com.bowstreet.core.Base.BuilderName"> 
+      <Prompt>Name (Optional)</Prompt> 
+      <InitialValue /> 
+      <HelpText /> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>false</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="Libraries" base="com.bowstreet.core.Base.Arguments"> 
+      <Prompt>Libraries</Prompt> 
+      <Group>Libraries</Group>
+      <InitialValue /> 
+      <HelpText>Select libraries with JS/CSS</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+      
+      <Editor JavaClass="com.bowstreet.editor.uitools.widgets.ListWidget">
+        <Argument name="height">120</Argument>
+        <Argument name="allowReorder">false</Argument>
+        <Argument name="columns">1</Argument>
+        <Argument name="headings">Library</Argument>
+        <Argument name="columnTags">Library</Argument>
+        <Argument name="rowtag">LibraryEntry</Argument>
+        <Argument name="columnWidths">400</Argument>
+        <Argument name="cellEditors">
+          <Editors>
+            <Editor JavaClass="com.bowstreet.editor.uitools.widgets.BComboBox">
+              <Argument name="ListData">jquery-1.7.2,jquery-1.9.1,jquery-1.10.2,jquery-ui-1.10.3,jquery.mobile-1.3.2,Highcharts-2.2.0</Argument>
+              <Argument name="IsEditable">false</Argument>
+            </Editor>
+          </Editors>
+        </Argument>
+      </Editor>
+    </InputDefinition> 
+    <InputDefinition name="IncludeLibrariesOption" base="com.bowstreet.core.Base.StringData"> 
+      <Prompt>Include Libraries</Prompt> 
+      <Group>Libraries</Group>
+      <InitialValue>IncludeAlways</InitialValue> 
+      <HelpText /> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+      <Editor JavaClass="com.bowstreet.widget.RadioBox"> 
+        <Argument name="ListData" inheritable="true">IncludeAlways,OmitWhenInPortal</Argument> 
+        <Argument name="ListLabels" inheritable="true">Always include JS libraries,Omit JS libraries when running as portlet</Argument> 
+      </Editor> 
+    </InputDefinition> 
+    
+    <InputDefinition name="HtmlFile" base="com.bowstreet.core.Base.ServableContent"> 
+      <Prompt>Application HTML</Prompt> 
+      <Group>ApplicationCode</Group>
+      <InitialValue /> 
+      <HelpText>Main HTML file that will be displayed</HelpText> 
+      <Page /> 
+      <Required>true</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="PageName" base="com.bowstreet.core.Base.BuilderName"> 
+      <Prompt>Page Name To Create</Prompt> 
+      <Group>ApplicationCode</Group>
+      <InitialValue>main</InitialValue> 
+      <HelpText>Specify the page name you want for your application HTML.   Defaults to 'main' so it will be displayed automatically.</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="ScriptFile" base="com.bowstreet.core.Base.ServableContent"> 
+      <Prompt>Application Script File</Prompt> 
+      <Group>ApplicationCode</Group>
+      <InitialValue /> 
+      <HelpText>Optional JavaScript file containing application code</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="CssFile" base="com.bowstreet.core.Base.ServableContent"> 
+      <Prompt>Application CSS File</Prompt> 
+      <Group>ApplicationCode</Group>
+      <InitialValue /> 
+      <HelpText>Optional CSS file for application</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="AddServiceProviderSupport" base="com.bowstreet.core.Base.BooleanData"> 
+      <Prompt>Add Service Provider Support</Prompt> 
+      <Group>ProviderSupport</Group>
+      <InitialValue>false</InitialValue> 
+      <HelpText>Optionally generates JS variables for accessing data from a service provider model</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="ServiceProvider" base="com.bowstreet.builders.webapp.ServiceConsumer2Builder.ProviderModel"> 
+      <Prompt>Service Provider</Prompt> 
+      <Group>ProviderSupport</Group>
+      <InitialValue /> 
+      <HelpText /> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="ServiceVarName" base="com.bowstreet.core.Base.BuilderName"> 
+      <Prompt>JS Variable Name for Service URLs</Prompt> 
+      <Group>ProviderSupport</Group>
+      <InitialValue>serviceRestUrls</InitialValue> 
+      <HelpText>Specify the name of the JS variable that has URLs for all the service operations.</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+  </InputDefinitions> 
+  <GroupDefinitions> 
+    <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
+    <GroupDefinition id="Libraries">
+            <Name>Script Libraries</Name>
+            <BorderStyle>Etched</BorderStyle>
+            <IsCollapsible>true</IsCollapsible>
+      <InitiallyCollapsed>false</InitiallyCollapsed> 
+            <Description>Script library files are used to identify the JS/CSS files used for a particular library.  These libraries are HTML files in the folder /samples/script_builder/libraries/.   Libraries with a suffix "cdn" are loaded from hosted web servers; for other libraries you will need to provide the required files.  To add a new library, add an HTML file in that folder with references to the desired JS/CSS files.</Description>
+    </GroupDefinition> 
+    <GroupDefinition id="ApplicationCode">
+            <Name>Application Code</Name>
+            <BorderStyle>Etched</BorderStyle>
+            <IsCollapsible>true</IsCollapsible>
+      <InitiallyCollapsed>false</InitiallyCollapsed> 
+            <Description>Your application code should include an HTML file, with optional JS and CSS files.</Description>
+    </GroupDefinition> 
+    <GroupDefinition id="ProviderSupport">
+            <Name>REST Service Provider Support</Name>
+            <BorderStyle>Etched</BorderStyle>
+            <IsCollapsible>true</IsCollapsible>
+      <InitiallyCollapsed>false</InitiallyCollapsed> 
+            <Description>Select a Data Service provider model if you want to call a Data Service from your JS code.   If enabled, a JS variable will be generated in the page that has members for the URLs to each of those service operations.</Description>
+    </GroupDefinition> 
+  </GroupDefinitions> 
+  <PageDefinitions /> 
+</BuilderDef> 
+ 
