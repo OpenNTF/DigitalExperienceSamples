@@ -10,29 +10,46 @@ Build file for creating Zip Archive
     <property name="build.dir" value="."/>
     <property name="dist.dir" value="${build.dir}/dist"/>
     <property name="zip.file"       value="${dist.dir}/${sample.name}.zip" />
+    <property name="download.file"       value="${dist.dir}/${sample.name}_package.zip" />
 
     <property name="webcontent.dir" value="${build.dir}/WebContent"/>
     <property name="webinf.dir"     value="${webcontent.dir}/WEB-INF"/>
     <property name="models.dir"     value="${webcontent.dir}/WEB-INF/models"/>
     <property name="source.dir"     value="${webcontent.dir}/WEB-INF/work/source"/>
+    <property name="documentation.dir" value="${build.dir}/documentation"/>
   </target>
 
   <target name="default" depends="properties,clean">
-    <antcall target="makezips"/>
+    <antcall target="makedownload"/>
   </target>
 
   <target name="clean" depends="properties">
     <delete dir="${dist.dir}" includes="*.*"/>
   </target>
 
-  <!--  Used to build the zip package. -->
-  <target name="makezips" depends="properties">
     <mkdir dir="${dist.dir}" />
+
+  <!--  Used to build the download package, including doc and the installable archive. -->
+  <target name="makedownload" depends="properties,makezips">
+    <zip destfile="${download.file}">
+        <zipfileset dir="${dist.dir}">
+          <include name="${sample.name}.zip" />
+        </zipfileset>
+        <zipfileset dir="${documentation.dir}">
+          <include name="*.pdf"/>
+			<include name="LICENSE"/>
+			<include name="NOTICE"/>
+          <include name="screenshots/**"/>
+        </zipfileset>
+    </zip>
+
+  </target>
+	
+  <!--  Used to build the installable archive. -->
+  <target name="makezips" depends="properties">
 
     <zip destfile="${zip.file}">
       <zipfileset dir="${webcontent.dir}">
-        <include name="LICENSE"/>
-        <include name="NOTICE"/>
         <include name="WEB-INF/samples/scripting/**"/>
         <include name="samples/scripting/**"/>
         <include name="samples/script_builder/**"/>
