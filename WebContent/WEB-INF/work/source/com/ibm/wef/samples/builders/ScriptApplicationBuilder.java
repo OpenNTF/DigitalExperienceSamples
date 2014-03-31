@@ -11,8 +11,6 @@ package com.ibm.wef.samples.builders;
 
 import java.util.Iterator;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.bowstreet.builders.webapp.api.ClientJavaScript;
 import com.bowstreet.builders.webapp.api.ImportedPage;
 import com.bowstreet.builders.webapp.api.InsertedPage;
@@ -20,12 +18,17 @@ import com.bowstreet.builders.webapp.api.RestServiceEnable;
 import com.bowstreet.builders.webapp.api.ServiceConsumer2;
 import com.bowstreet.builders.webapp.api.StyleSheet;
 import com.bowstreet.builders.webapp.api.VisibilitySetter;
-import com.bowstreet.builders.webapp.foundation.*;
-import com.bowstreet.builders.webapp.methods.BuilderHelperUtil;
+import com.bowstreet.builders.webapp.foundation.WebAppBuilder;
 import com.bowstreet.builderutilities.CodeFormatter;
-import com.bowstreet.generation.*;
-import com.bowstreet.util.*;
-import com.bowstreet.webapp.*;
+import com.bowstreet.generation.BuilderCall;
+import com.bowstreet.generation.BuilderInputs;
+import com.bowstreet.generation.GenContext;
+import com.bowstreet.util.IXml;
+import com.bowstreet.util.StringUtil;
+import com.bowstreet.webapp.DataService;
+import com.bowstreet.webapp.Method;
+import com.bowstreet.webapp.ServiceOperation;
+import com.bowstreet.webapp.WebApp;
 
 /**
  * Builder regen class for Script Application builder
@@ -71,7 +74,8 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		}
 		// Add each library by importing a page then inserting it
 		if (libraries != null) {
-			for (Iterator iterator = libraries.getChildren().iterator(); iterator.hasNext();) {
+			for (@SuppressWarnings("rawtypes")
+			Iterator iterator = libraries.getChildren().iterator(); iterator.hasNext();) {
 				IXml libraryEntry = (IXml) iterator.next();
 				String libraryName = libraryEntry.getText("Library");
 				if (libraryName != null) {

@@ -27,10 +27,10 @@ Build file for creating Zip Archive
     <delete dir="${dist.dir}" includes="*.*"/>
   </target>
 
-    <mkdir dir="${dist.dir}" />
-
   <!--  Used to build the download package, including doc and the installable archive. -->
   <target name="makedownload" depends="properties,makezips">
+    <mkdir dir="${dist.dir}" />
+
     <zip destfile="${download.file}">
         <zipfileset dir="${dist.dir}">
           <include name="${sample.name}.zip" />
