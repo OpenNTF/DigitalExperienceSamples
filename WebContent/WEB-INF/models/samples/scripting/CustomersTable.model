@@ -1,4 +1,4 @@
-<Model id="samples/scripting/ChartSample"><BuilderCallList><BuilderCall id="bc6"><BuilderDefID>com.bowstreet.builders.core.Comment</BuilderDefID>
+<Model id="samples/scripting/CustomersTable"><BuilderCallList><BuilderCall id="bc7"><BuilderDefID>com.bowstreet.builders.core.Comment</BuilderDefID>
 <Messages />
 <Inputs><Input name="BuilderCallCategory">General</Input>
 <Input name="Name">Copyright</Input>
@@ -28,8 +28,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 <Input name="RCPLaunchMenu">none</Input>
 <Input name="RCPTitleBar">show</Input>
 <Input name="RCPViewType">portlet</Input>
-<Input name="Name">Chart Sample</Input>
-<Input name="PortletTitle">Chart Sample</Input>
+<Input name="Name">Customers Table Sample</Input>
+<Input name="PortletTitle">Customers Table Sample</Input>
 </Inputs>
 </BuilderCall>
 <BuilderCall id="bc5"><BuilderDefID>com.ibm.wef.samples.builders.ScriptApplicationBuilder</BuilderDefID>
@@ -37,31 +37,31 @@ Unless required by applicable law or agreed to in writing, software distributed 
 <Inputs><Input name="BuilderCallEnabled">true</Input>
 <Input name="AddServiceProviderSupport">true</Input>
 <Input name="PageName">main</Input>
-<Input name="HtmlFile">/samples/scripting/chart_sample.html</Input>
+<Input name="HtmlFile">/samples/scripting/customers_table.html</Input>
 <Input name="DefaultName">main</Input>
-<Input name="ScriptFile">/samples/scripting/chart_sample.js</Input>
+<Input name="ScriptFile">/samples/scripting/customers_table.js</Input>
 <Input name="Libraries"><top><LibraryEntry><Library>jquery</Library>
 </LibraryEntry>
-<LibraryEntry><Library>jqplot_bar</Library>
+<LibraryEntry><Library>jquery_datatables</Library>
 </LibraryEntry>
 </top>
 </Input>
-<Input name="ServiceProvider">samples/scripting/MonthlySalesProvider</Input>
-<Input name="ServiceVarName">salesData</Input>
+<Input name="ServiceProvider">samples/scripting/CustomerListProvider</Input>
+<Input name="ServiceVarName">customersServiceUrls</Input>
 </Inputs>
 </BuilderCall>
 </BuilderCallList>
 <Properties><Contained>false</Contained>
 </Properties>
-<Dependencies><Dependency type="File">/samples/scripting/chart_sample.html</Dependency>
+<Dependencies><Dependency type="File">/samples/scripting/customers_table.html</Dependency>
 <Dependency type="File">/samples/script_builder/libraries/jquery.html</Dependency>
-<Dependency type="File">/samples/script_builder/libraries/jqplot_bar.html</Dependency>
-<Dependency type="File">/samples/scripting/chart_sample.js</Dependency>
-<Dependency type="Model">samples/scripting/MonthlySalesProvider</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery_datatables.html</Dependency>
+<Dependency type="File">/samples/scripting/customers_table.js</Dependency>
+<Dependency type="Model">samples/scripting/CustomerListProvider</Dependency>
 </Dependencies>
 <ExternalProperties><ExternalProperty id="PortletModel">true</ExternalProperty>
-<ExternalProperty id="PortletName">Chart Sample</ExternalProperty>
-<ExternalProperty id="PortletTitle">Chart Sample</ExternalProperty>
+<ExternalProperty id="PortletName">Customers Table Sample</ExternalProperty>
+<ExternalProperty id="PortletTitle">Customers Table Sample</ExternalProperty>
 <ExternalProperty id="PortletDefaultLocale">en</ExternalProperty>
 <ExternalProperty id="PortletAdditionalLocales">en</ExternalProperty>
 <ExternalProperty id="TestPortalPage"></ExternalProperty>

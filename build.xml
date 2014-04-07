@@ -10,7 +10,7 @@ Build file for creating Zip Archive
     <property name="build.dir" value="."/>
     <property name="dist.dir" value="${build.dir}/dist"/>
     <property name="zip.file"       value="${dist.dir}/${sample.name}.zip" />
-    <property name="download.file"       value="${dist.dir}/${sample.name}_package.zip" />
+    <property name="download.file"       value="${dist.dir}/${sample.name}_download.zip" />
 
     <property name="webcontent.dir" value="${build.dir}/WebContent"/>
     <property name="webinf.dir"     value="${webcontent.dir}/WEB-INF"/>

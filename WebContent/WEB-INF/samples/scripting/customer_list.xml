@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+      <customerList>
+         <customer>
+            <address>2001 West Rd.</address>
+            <balance>$2,350.00</balance>
+            <city>Salisbury</city>
+            <id>2143</id>
+            <name>Samantha Daryn</name>
+            <phone>212-555-9876</phone>
+            <status>Standard</status>
+            <updated>07/01/2012</updated>
+         </customer>
+         <customer>
+            <address>123 Main St</address>
+            <balance>$1,050.00</balance>
+            <city>Concord</city>
+            <id>2144</id>
+            <name>Lucille Suarez</name>
+            <phone>303-555-2435</phone>
+            <status>Preferred</status>
+            <updated>11/21/2012</updated>
+         </customer>
+         <customer>
+            <address>South Mill Pond Ave.</address>
+            <balance>$7,235.00</balance>
+            <city>Sherman Oaks</city>
+            <id>2145</id>
+            <name>Amar Srivastava</name>
+            <phone>506-555-1212</phone>
+            <status>Inner Circle</status>
+            <updated>08/12/2012</updated>
+         </customer>
+         <customer>
+            <address>44 Center St.</address>
+            <balance>$1,030.00</balance>
+            <city>Sydney</city>
+            <id>2146</id>
+            <name>Ted Amado</name>
+            <phone>303-555-1234</phone>
+            <status>Standard</status>
+            <updated>02/14/2012</updated>
+         </customer>
+         <customer>
+            <address>1204 Mountain Boulevard</address>
+            <balance>$1,300.00</balance>
+            <city>Canterbury</city>
+            <id>2147</id>
+            <name>Dan Misawa</name>
+            <phone>601-555-8888</phone>
+            <status>Preferred</status>
+            <updated>06/29/2012</updated>
+         </customer>
+         <customer>
+            <address>133 Rock Boulevard</address>
+            <balance>$3,440.00</balance>
+            <city>Denver</city>
+            <id>2148</id>
+            <name>Frank Adams</name>
+            <phone>601-555-8888</phone>
+            <status>Preferred</status>
+            <updated>03/09/2013</updated>
+         </customer>
+         <customer>
+            <address>1 Circle Lane</address>
+            <balance>$1,110.00</balance>
+            <city>San Jose</city>
+            <id>2149</id>
+            <name>Steve Williams</name>
+            <phone>601-555-8888</phone>
+            <status>Preferred</status>
+            <updated>12/04/2012</updated>
+         </customer>
+         <customer>
+            <address>2425 Mountain Rd.</address>
+            <balance>$7,670.00</balance>
+            <city>Dublin</city>
+            <id>2150</id>
+            <name>Ron Espinosa</name>
+            <phone>601-555-8888</phone>
+            <status>Standard</status>
+            <updated>02/02/2012</updated>
+         </customer>
+         <customer>
+            <address>26B Seiching Road</address>
+            <balance>$1,800.00</balance>
+            <city>Beijing</city>
+            <id>2151</id>
+            <name>Ed El-Amon</name>
+            <phone>601-555-8888</phone>
+            <status>Standard</status>
+            <updated>01/11/2013</updated>
+         </customer>
+         <customer>
+            <address>Paradise Lane</address>
+            <balance>$2,350.00</balance>
+            <city>Pittsburgh</city>
+            <id>2152</id>
+            <name>Pierre Dumont</name>
+            <phone>601-555-8888</phone>
+            <status>Preferred</status>
+            <updated>11/20/2012</updated>
+         </customer>
+         <customer>
+            <address>4 Technology Drive</address>
+            <balance>$1,222.00</balance>
+            <city>Westford</city>
+            <id>2153</id>
+            <name>Gardner Raynes</name>
+            <phone>601-555-8888</phone>
+            <status>Preferred</status>
+            <updated>06/29/2012</updated>
+         </customer>
+         <customer>
+            <address>155 W. 67 St.</address>
+            <balance>$3,000.00</balance>
+            <city>New York</city>
+            <id>2154</id>
+            <name>Dennis Michaels</name>
+            <phone>601-555-8888</phone>
+            <status>Standard</status>
+            <updated>05/20/2012</updated>
+         </customer>
+         <customer>
+            <address>23 S. Main St.</address>
+            <balance>$9,800.00</balance>
+            <city>Durham</city>
+            <id>2155</id>
+            <name>Suzanne Miles</name>
+            <phone>601-555-8888</phone>
+            <status>Preferred</status>
+            <updated>06/02/2012</updated>
+         </customer>
+         <customer>
+            <address>1445 West Highway</address>
+            <balance>$7,540.00</balance>
+            <city>Raleigh</city>
+            <id>2156</id>
+            <name>Betty Zechman</name>
+            <phone>601-555-8888</phone>
+            <status>Inner Circle</status>
+            <updated>10/30/2012</updated>
+         </customer>
+         <customer>
+            <address>15498 Central Ave</address>
+            <balance>$5,000.00</balance>
+            <city>Houston</city>
+            <id>2157</id>
+            <name>Jasmine Haj</name>
+            <phone>601-555-8888</phone>
+            <status>Standard</status>
+            <updated>10/21/2012</updated>
+         </customer>
+         <customer>
+            <address>5150 S. Michigan Ave.</address>
+            <balance>$1,202.00</balance>
+            <city>Detroit</city>
+            <id>2158</id>
+            <name>Charlie Hamilton</name>
+            <phone>601-555-8888</phone>
+            <status>Preferred</status>
+            <updated>06/29/2012</updated>
+         </customer>
+      </customerList>

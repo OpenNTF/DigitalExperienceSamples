@@ -20,31 +20,61 @@ var defaultData = [ {
 	"Month" : "March",
 	"Goal" : 5000,
 	"Actual" : 4302
+}, {
+	"Month" : "April",
+	"Goal" : 6000,
+	"Actual" : 7230
 } ];
 
 var chartSample = {
-	displayBarChart : function(id, data) {
-
-		var chart = new cfx.Chart();
-		chart.setGallery(cfx.Gallery.Bar);
-		chart.getAllSeries().getPointLabels().setVisible(true);
-
-		// set title
-		var title = new cfx.TitleDockable();
-		title.setText("Goal and Actual Sales by Month");
-		chart.getTitles().add(title);
-
-		chart.setDataSource(data);
-		chartData = chart.getData();
-		chartData.setSeries(2); // two series
-		chartData.setPoints(data.length);
-		chart.getLegendBox().setVisible(true);
-		chart.create(id);
+	displayBarChart : function(id, plotData) {
+		$.jqplot(id, plotData.seriesData, {
+			
+	        seriesDefaults:{
+	            renderer:$.jqplot.BarRenderer,
+	            pointLabels: { show: true }
+	        },
+	        series:[
+	                {label:'Goal'},
+	                {label:'Actual'}
+	            ],
+	        legend: {
+	            show: true,
+	            placement: 'outsideGrid'
+	        },
+	        axes: {
+	            xaxis: {
+	                renderer: $.jqplot.CategoryAxisRenderer,
+	                ticks: plotData.seriesLabels
+	            },
+	            yaxis: {
+	                tickOptions: {formatString: "$%'i"}
+	            }
+  	  		}
+		});
+	},
+	// Get data into the required format, then display the chart
+	displayChart: function(id, data) {
+		var series1 = [];
+		var series2 = [];
+		var labels = [];
+		// Get the data into the format jqPlot wants it:
+		for (var i = 0; i < data.length; i++) {
+			series1.push(parseFloat(data[i].Goal));
+			series2.push(parseFloat(data[i].Actual));
+			labels.push(data[i].Month);
+		}
+		var plotSettings = {
+				seriesData: [series1, series2],
+				seriesLabels: labels
+		};
+		// console.log("plotSettings: " + JSON.stringify(plotSettings));
+		chartSample.displayBarChart(id, plotSettings);
 	},
 
-	// 
+
+	// Display chart using data from service - 
 	displayBarChartFromService : function(id, data) {
-		console.log("data: " + JSON.stringify(data));
 		// Transform the data to the way jqPlot Charts wants it:
 		var jqPlotChartData = jQuery.map(data, function(row, index) {
 			var newRow = {};
@@ -53,7 +83,7 @@ var chartSample = {
 			newRow["Actual"] = parseFloat(row.Actual);
 			return newRow;
 		});
-		chartSample.displayBarChart(id, jqPlotChartData);
+		chartSample.displayChart(id, jqPlotChartData);
 	}
 };
 
@@ -62,12 +92,14 @@ $(document).ready(
 			// see if "salesData" variable is available, with members for URLs for REST services
 			if (typeof salesData == "undefined") {
 				// Use default static data
-				chartSample.displayBarChart('ChartDiv', defaultData);
+				chartSample.displayChart('ChartDiv', defaultData);
 			} else {
 				// Fetch dynamic JSON sing WEF REST Enabled Data Service REST URL
 				$.getJSON(salesData.getSalesReportsURL, {}, function(ajaxData) {
+					// console.log("ajaxData: " + JSON.stringify(ajaxData));
 					chartSample.displayBarChartFromService('ChartDiv',
 							ajaxData.SalesData.MonthData);
 				});
 			}
+			;
 		});
