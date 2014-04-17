@@ -3,7 +3,7 @@
   <ReadableName>Script Library</ReadableName> 
   <GenHandlerClassName>com.bowstreet.builders.webapp.foundation.WebAppGenHandler</GenHandlerClassName> 
   <HelpFile /> 
-  <RequiredFactoryVersion>8.0.0</RequiredFactoryVersion> 
+  <RequiredFactoryVersion>7.0.0</RequiredFactoryVersion> 
   <Description>Adds a JS-based library such as JQuery to the selected pages.  Optionally provides JS access to the Data Service operations in a Service Provider model. 
 </Description> 
   <Domains> 

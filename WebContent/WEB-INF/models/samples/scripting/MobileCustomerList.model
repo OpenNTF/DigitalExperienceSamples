@@ -55,9 +55,9 @@ Parameters:
 <Input name="AddServiceProviderSupport">false</Input>
 <Input name="ServiceVarName">serviceRestUrls</Input>
 <Input name="DisableSmartRefresh">true</Input>
-<Input name="Libraries"><top><LibraryEntry><Library>jquery-1.10.2-cdn</Library>
+<Input name="Libraries"><top><LibraryEntry><Library>jquery</Library>
 </LibraryEntry>
-<LibraryEntry><Library>jquerymobile-1.3.1</Library>
+<LibraryEntry><Library>jquery_mobile</Library>
 </LibraryEntry>
 </top>
 </Input>
@@ -68,7 +68,7 @@ Parameters:
 <Inputs><Input name="BuilderCallEnabled">true</Input>
 <Input name="ReturnType">Object</Input>
 <Input name="RenameExisting">false</Input>
-<Input name="Actions"><Actions><Action><ActionType></ActionType>
+<Input name="Actions"><Actions><Action><ActionType />
 <ActionName>DataServices/Customer/getCustomers</ActionName>
 </Action>
 <Action><ActionType />
@@ -214,8 +214,8 @@ Parameters:
 <Dependencies><Dependency type="Model">samples/scripting/CustomerListProvider</Dependency>
 <Dependency type="File">/factory/html_templates/clean_themes.html</Dependency>
 <Dependency type="File">/factory/data_layout_templates/responsive_multiline_list_layout_template.html</Dependency>
-<Dependency type="File">/samples/script_builder/libraries/jquery-1.10.2-cdn.html</Dependency>
-<Dependency type="File">/samples/script_builder/libraries/jquerymobile-1.3.1.html</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery.html</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery_mobile.html</Dependency>
 </Dependencies>
 <ExternalProperties />
 </Model>

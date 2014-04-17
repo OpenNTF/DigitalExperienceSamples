@@ -238,23 +238,6 @@ Parameters:
 </Input>
 </Inputs>
 </BuilderCall>
-<BuilderCall id="bc10"><BuilderDefID>com.bowstreet.builders.webapp.TextBuilder</BuilderDefID>
-<Messages />
-<Inputs><Input name="BuilderCallEnabled">false</Input>
-<Input name="QuoteText">false</Input>
-<Input name="ReplaceContents">true</Input>
-<Input name="ReplaceTargetElement">false</Input>
-<Input name="Control">page_header_text</Input>
-<Input name="PageLocation"><SimplePageLocation><Page>AllPages</Page>
-<NameSearch>vf_header</NameSearch>
-</SimplePageLocation>
-</Input>
-<Input name="LookupTable">None</Input>
-<Input name="HTMLAttributes"><HTMLAttributes />
-</Input>
-<Input name="Text">&lt;div data-role="page"&gt;&lt;DIV data-role="header" data-theme="b"&gt;&lt;a rel="external" href="#" data-icon="home"&gt;Home&lt;/a&gt;&lt;H1&gt;Customer List&lt;/H1&gt;&lt;a href="#"&gt;Logout&lt;/a&gt;&lt;/DIV&gt;&lt;!-- /header --&gt;</Input>
-</Inputs>
-</BuilderCall>
 </BuilderCallList>
 <Properties><Contained>false</Contained>
 </Properties>
