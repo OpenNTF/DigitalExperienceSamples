@@ -1,0 +1,221 @@
+<Model id="samples/scripting/MobileCustomerList"><BuilderCallList><BuilderCall id="bc2"><BuilderDefID>com.bowstreet.builders.core.Comment</BuilderDefID>
+<Messages />
+<Inputs><Input name="Name">Next Steps</Input>
+<Input name="BuilderCallEnabled">true</Input>
+<Input name="Comment">For further development of this model, you can add and modify any builders to customize the application.   You can also use Design view to work with page elements, for example to move fields around or by using right-click commands.
+
+With that profiling enabled, when you run the model, by default you will see a "desktop" view of the application.
+
+You can view and test both the Desktop, Tablet and Smartphone profiles from Designer.   To do this, open the "Applied Profiles" tab, and select the profile you want to view and click the "Apply" button.   After you have done this, when you run the model you will see the selected profile.    
+
+You can also profile other builder inputs according to device type, and you can apply different profiling for specific device types if you want.   For example, you could have different CSS style sheets applied for different types of smartphones if you want to have a different appearance for each device.</Input>
+<Input name="BuilderCallComment">For further development of this model, you can add and modify any builders to customize the application.   You can also use Design view to work with page elements, for example to move fields around or by using right-click commands.
+
+With that profiling enabled, when you run the model, by default you will see a "desktop" view of the application.
+
+You can view and test both the Desktop, Tablet and Smartphone profiles from Designer.   To do this, open the "Applied Profiles" tab, and select the profile you want to view and click the "Apply" button.   After you have done this, when you run the model you will see the selected profile.    
+
+You can also profile other builder inputs according to device type, and you can apply different profiling for specific device types if you want.   For example, you could have different CSS style sheets applied for different types of smartphones if you want to have a different appearance for each device.</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc7"><BuilderDefID>com.bowstreet.builders.webapp.ServiceConsumer2Builder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="BuilderCallCategory">General</Input>
+<Input name="UseAllOperations">true</Input>
+<Input name="OverrideInputs">true</Input>
+<Input name="Name">Customer</Input>
+<Input name="ProviderModel">samples/scripting/CustomerListProvider</Input>
+<Input name="OperationInputs" />
+<Input name="OperationName">all</Input>
+<Input name="ContextVariables"><ContextVariables><ValuesForOperation><Operation>byStatus</Operation>
+<Mappings />
+</ValuesForOperation>
+<ValuesForOperation><Operation>byExactStatus</Operation>
+<Mappings />
+</ValuesForOperation>
+<ValuesForOperation><Operation>all</Operation>
+<Mappings />
+</ValuesForOperation>
+<ValuesForOperation><Operation>getOrderDetails</Operation>
+<Mappings />
+</ValuesForOperation>
+</ContextVariables>
+</Input>
+<Input name="OperationDescription">[no description]
+Parameters:
+	Name:			results</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc25"><BuilderDefID>com.ibm.wef.samples.builders.ScriptLibraryBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="AllPages">true</Input>
+<Input name="IncludeLibrariesOption">IncludeAlways</Input>
+<Input name="AddServiceProviderSupport">false</Input>
+<Input name="ServiceVarName">serviceRestUrls</Input>
+<Input name="DisableSmartRefresh">true</Input>
+<Input name="Libraries"><top><LibraryEntry><Library>jquery-1.10.2-cdn</Library>
+</LibraryEntry>
+<LibraryEntry><Library>jquerymobile-1.3.1</Library>
+</LibraryEntry>
+</top>
+</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc17"><BuilderDefID>com.bowstreet.builders.webapp.ActionListBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="ReturnType">Object</Input>
+<Input name="RenameExisting">false</Input>
+<Input name="Actions"><Actions><Action><ActionType></ActionType>
+<ActionName>DataServices/Customer/getCustomers</ActionName>
+</Action>
+<Action><ActionType />
+<ActionName>CustomerList</ActionName>
+</Action>
+</Actions>
+</Input>
+<Input name="Name">main</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc19"><BuilderDefID>com.bowstreet.builders.webapp.PageBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="PageData">&lt;html&gt;
+    &lt;head&gt;&lt;title&gt;Customer List&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;
+        &lt;form name="myForm" method="post"&gt;            
+              &lt;div data-role="page"&gt;
+              	&lt;DIV data-role="header" data-theme="b"&gt;
+   					&lt;a rel="external" href="#" data-icon="home"&gt;Home&lt;/a&gt;
+					&lt;H1&gt;Customer List&lt;/H1&gt;												
+					&lt;a href="#"&gt;Logout&lt;/a&gt;						
+				&lt;/DIV&gt;&lt;!-- /header --&gt;
+				
+				&lt;DIV data-role="content" data-theme="c"&gt;
+					&lt;span name="customerList"&gt;
+						
+					&lt;/span&gt;
+				&lt;/DIV&gt;
+				
+				&lt;DIV data-role="footer"&gt;
+					&lt;H4&gt;&amp;copy; WEF Community&lt;/H4&gt;
+				&lt;/DIV&gt;&lt;!-- /footer --&gt;
+			  &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</Input>
+<Input name="AbsoluteURLs">false</Input>
+<Input name="RenameExisting">false</Input>
+<Input name="ReplaceExisting">false</Input>
+<Input name="FullyParse">true</Input>
+<Input name="Name">CustomerList</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc21"><BuilderDefID>com.bowstreet.builders.webapp.pageautomation.DataPage</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="PageType">Infer</Input>
+<Input name="inputObjectType">String</Input>
+<Input name="CreateTags">true</Input>
+<Input name="UseTheme">true</Input>
+<Input name="GenerateLabels">true</Input>
+<Input name="AddElementNames">LeaveNameless</Input>
+<Input name="ClearDataBeforeSaving">false</Input>
+<Input name="InferControl">true</Input>
+<Input name="EnumeratedControlType">Select</Input>
+<Input name="EnumeratedControlOptions">Merge</Input>
+<Input name="InitializeInputsWhen">OnModelLoad</Input>
+<Input name="ValidateFromSchema">Both</Input>
+<Input name="BeanValidation">Both</Input>
+<Input name="ValidationMethodBehavior">CallAlways</Input>
+<Input name="ValidationErrorPlacement">ColumnRight</Input>
+<Input name="RequiredPromptPlacement">ColumnLeft</Input>
+<Input name="RequiredPromptText">*</Input>
+<Input name="LocalizedResource">AddNew</Input>
+<Input name="TranslateHTMLLabels">false</Input>
+<Input name="RuntimeHTMLLabels">true</Input>
+<Input name="TemplateFile">/factory/html_templates/gridtable.html</Input>
+<Input name="TypedVariable">DataServices/Customer/getCustomers/results</Input>
+<Input name="PageName">CustomerList</Input>
+<Input name="CreateTagsLocation">customerList</Input>
+<Input name="DefaultName">CustomerList</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc23"><BuilderDefID>com.bowstreet.builders.webapp.DataLayoutBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="UseTheme">true</Input>
+<Input name="MoveLinkToListItem">false</Input>
+<Input name="AddLogging">false</Input>
+<Input name="AutomaticParentSelection">true</Input>
+<Input name="SingleField">[CustomerList]CustomerList</Input>
+<Input name="TemplateFile">/factory/data_layout_templates/responsive_multiline_list_layout_template.html</Input>
+<Input name="TemplateDescription">This template generates a list in which each list item can contains three columns and three rows of data. You can use this layout to convert a grid table style to a list layout.  There are eight base layouts that are set by selecting a style sheet. These include layouts that vary from 1-3 columns and specify different column sizes.  The theme setting will use the three column equal layout.  Style sheet files that end in uitheme.css use styles that are defined in the themes css file.</Input>
+<Input name="StyleSheetFile">/factory/data_layout_templates/responsive_multiline_3_column_equal_uitheme.css</Input>
+<Input name="LayoutFields"><top><FieldMapping><Name>left_top</Name>
+<Value>name</Value>
+</FieldMapping>
+<FieldMapping><Name>left_middle</Name>
+<Value>address</Value>
+</FieldMapping>
+<FieldMapping><Name>left_bottom</Name>
+</FieldMapping>
+<FieldMapping><Name>center_top</Name>
+</FieldMapping>
+<FieldMapping><Name>center_middle</Name>
+<Value>phone</Value>
+</FieldMapping>
+<FieldMapping><Name>center_bottom</Name>
+</FieldMapping>
+<FieldMapping><Name>right_top</Name>
+</FieldMapping>
+<FieldMapping><Name>right_middle</Name>
+</FieldMapping>
+<FieldMapping><Name>right_bottom</Name>
+</FieldMapping>
+<FieldMapping><Name>containerLayoutStyles(clStyles)</Name>
+</FieldMapping>
+<FieldMapping><Name>left_column_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>left_top_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>left_middle_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>left_bottom_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>center_column_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>center_top_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>center_middle_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>center_bottom_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>right_column_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>right_top_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>right_middle_styles</Name>
+</FieldMapping>
+<FieldMapping><Name>right_bottom_styles</Name>
+</FieldMapping>
+</top>
+</Input>
+<Input name="LayoutContainers"><top />
+</Input>
+<Input name="DefaultName">Multi-Line List (Responsive)</Input>
+</Inputs>
+</BuilderCall>
+</BuilderCallList>
+<Properties><Contained>false</Contained>
+</Properties>
+<Dependencies><Dependency type="Model">samples/scripting/CustomerListProvider</Dependency>
+<Dependency type="File">/factory/html_templates/clean_themes.html</Dependency>
+<Dependency type="File">/factory/data_layout_templates/responsive_multiline_list_layout_template.html</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery-1.10.2-cdn.html</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquerymobile-1.3.1.html</Dependency>
+</Dependencies>
+<ExternalProperties />
+</Model>

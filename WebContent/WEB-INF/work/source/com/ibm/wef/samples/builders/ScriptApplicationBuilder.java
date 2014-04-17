@@ -47,7 +47,6 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 
 		/* ##GENERATED_BODY_BEGIN#InputAccessorCode# */
 		// Generated code to get all the builder inputs
-		String name = builderInputs.getString(Constants.Name, null);
 		IXml libraries = builderInputs.getXml(Constants.Libraries, null);
 		String htmlFile = builderInputs.getString(Constants.HtmlFile, null);
 		String scriptFile = builderInputs.getString(Constants.ScriptFile, null);
@@ -115,44 +114,46 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 			}
 			DataService ds = webApp.getDataService(dataServiceName);
 			
-			// If RestServiceEnable methods aren't already present, call RestServiceEnable builder
-			ServiceOperation op = ds.getOperations().next();
-			if (op != null && (webApp.getMethod(op.getName() + "GenerateRestUrl")) == null) {
-				RestServiceEnable rse = new RestServiceEnable(builderCall, genContext);
-				rse.setDataServiceName(dataServiceName);
-				rse.setServiceExecutionMode(RestServiceEnable.BuilderStaticValues.SEMVAL_LocalCall);
-				rse.setResultType(RestServiceEnable.BuilderStaticValues.RTVAL_JSON);
-				rse.invokeBuilder();
+			if(ds != null){
+				// If RestServiceEnable methods aren't already present, call RestServiceEnable builder
+				ServiceOperation op = ds.getOperations().next();
+				if (op != null && (webApp.getMethod(op.getName() + "GenerateRestUrl")) == null) {
+					RestServiceEnable rse = new RestServiceEnable(builderCall, genContext);
+					rse.setDataServiceName(dataServiceName);
+					rse.setServiceExecutionMode(RestServiceEnable.BuilderStaticValues.SEMVAL_LocalCall);
+					rse.setResultType(RestServiceEnable.BuilderStaticValues.RTVAL_JSON);
+					rse.invokeBuilder();
+				}
+				// Add JS variable
+				/*
+				 * Form a script similar to this: var
+				 * jqueryImportedJSOrdersSampleRESTURLs = { getOrdersURL:
+				 * "${MethodCall/getOrdersGenerateRestUrl}", getOneOrderURL:
+				 * "${MethodCall/getOneOrderGenerateRestUrl}", deleteOrderURL:
+				 * "${MethodCall/deleteOrderGenerateRestUrl}", createOrderURL:
+				 * "${MethodCall/createOrderGenerateRestUrl}", updateOrderURL:
+				 * "${MethodCall/updateOrderGenerateRestUrl}" }
+				 */
+				String script = "var " + serviceVarName + " = {";
+	
+				Iterator<ServiceOperation> iter = ds.getOperations();
+				while (iter.hasNext()) {
+					ServiceOperation operation = iter.next();
+					String varText = operation.getName() + "URL: \"${MethodCall/" + operation.getName()
+							+ "GenerateRestUrl}\",\n";
+					script += varText;
+				}
+				script += "}";
+				ClientJavaScript cjs = new ClientJavaScript(builderCall, genContext);
+				cjs.setPageName(pageName);
+				cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Implicit);
+				cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Explicit);
+				// System.out.println("script: " + script);
+				cjs.setScript(script);
+				cjs.invokeBuilder();
 			}
-
-			// Add JS variable
-			/*
-			 * Form a script similar to this: var
-			 * jqueryImportedJSOrdersSampleRESTURLs = { getOrdersURL:
-			 * "${MethodCall/getOrdersGenerateRestUrl}", getOneOrderURL:
-			 * "${MethodCall/getOneOrderGenerateRestUrl}", deleteOrderURL:
-			 * "${MethodCall/deleteOrderGenerateRestUrl}", createOrderURL:
-			 * "${MethodCall/createOrderGenerateRestUrl}", updateOrderURL:
-			 * "${MethodCall/updateOrderGenerateRestUrl}" }
-			 */
-			String script = "var " + serviceVarName + " = {";
-
-			Iterator<ServiceOperation> iter = ds.getOperations();
-			while (iter.hasNext()) {
-				ServiceOperation operation = iter.next();
-				String varText = operation.getName() + "URL: \"${MethodCall/" + operation.getName()
-						+ "GenerateRestUrl}\",\n";
-				script += varText;
-			}
-			script += "}";
-			ClientJavaScript cjs = new ClientJavaScript(builderCall, genContext);
-			cjs.setPageName(pageName);
-			cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Implicit);
-			cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Explicit);
-			// System.out.println("script: " + script);
-			cjs.setScript(script);
-			cjs.invokeBuilder();
-			
+			else
+				builderCall.addMessage(BuilderCall.SEVERITY_ERROR, "Data service not found");
 		}
 		// If conditionally adding JS links, add a method to test for running in Portal
 		if (!INCLUDE_ALWAYS_OPTION.equals(includeLibrariesOption)) {

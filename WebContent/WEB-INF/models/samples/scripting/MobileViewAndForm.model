@@ -1,0 +1,277 @@
+<Model id="samples/scripting/MobileViewAndForm"><BuilderCallList><BuilderCall id="bc2"><BuilderDefID>com.bowstreet.builders.core.Comment</BuilderDefID>
+<Messages />
+<Inputs><Input name="Name">Next Steps</Input>
+<Input name="BuilderCallEnabled">true</Input>
+<Input name="Comment">For further development of this model, you can add and modify any builders to customize the application.   You can also use Design view to work with page elements, for example to move fields around or by using right-click commands.
+
+With that profiling enabled, when you run the model, by default you will see a "desktop" view of the application.
+
+You can view and test both the Desktop, Tablet and Smartphone profiles from Designer.   To do this, open the "Applied Profiles" tab, and select the profile you want to view and click the "Apply" button.   After you have done this, when you run the model you will see the selected profile.    
+
+You can also profile other builder inputs according to device type, and you can apply different profiling for specific device types if you want.   For example, you could have different CSS style sheets applied for different types of smartphones if you want to have a different appearance for each device.</Input>
+<Input name="BuilderCallComment">For further development of this model, you can add and modify any builders to customize the application.   You can also use Design view to work with page elements, for example to move fields around or by using right-click commands.
+
+With that profiling enabled, when you run the model, by default you will see a "desktop" view of the application.
+
+You can view and test both the Desktop, Tablet and Smartphone profiles from Designer.   To do this, open the "Applied Profiles" tab, and select the profile you want to view and click the "Apply" button.   After you have done this, when you run the model you will see the selected profile.    
+
+You can also profile other builder inputs according to device type, and you can apply different profiling for specific device types if you want.   For example, you could have different CSS style sheets applied for different types of smartphones if you want to have a different appearance for each device.</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc14"><BuilderDefID>com.bowstreet.builders.webapp.Theme</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="OverrideThemeProperties">true</Input>
+<Input name="ExportThemeFile">Export Theme File</Input>
+<Input name="ThemeFile">/WEB-INF/factory/themes/mobile/mobile_basic.uitheme</Input>
+<Input name="DefaultName">mobile_basic</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc12"><BuilderDefID>com.ibm.wef.samples.builders.ScriptLibraryBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="AllPages">true</Input>
+<Input name="IncludeLibrariesOption">IncludeAlways</Input>
+<Input name="AddServiceProviderSupport">false</Input>
+<Input name="ServiceVarName">serviceRestUrls</Input>
+<Input name="DisableSmartRefresh">true</Input>
+<Input name="Name">JQuery Mobile</Input>
+<Input name="Libraries"><top><LibraryEntry><Library>jquery</Library>
+</LibraryEntry>
+<LibraryEntry><Library>jquery_mobile</Library>
+</LibraryEntry>
+</top>
+</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc6"><BuilderDefID>com.bowstreet.builders.webapp.ServiceConsumer2Builder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="BuilderCallCategory">General</Input>
+<Input name="UseAllOperations">true</Input>
+<Input name="OverrideInputs">true</Input>
+<Input name="Name">Customer</Input>
+<Input name="ProviderModel">samples/scripting/CustomerListProvider</Input>
+<Input name="OperationInputs"><OverridenInputs><InputsForOperation><Operation>createCustomer</Operation>
+<Inputs><top><Input><Name>customer</Name>
+</Input>
+<Input><Name>customer.address</Name>
+</Input>
+<Input><Name>customer.balance</Name>
+</Input>
+<Input><Name>customer.city</Name>
+</Input>
+<Input><Name>customer.id</Name>
+</Input>
+<Input><Name>customer.name</Name>
+</Input>
+<Input><Name>customer.phone</Name>
+</Input>
+<Input><Name>customer.status</Name>
+</Input>
+<Input><Name>customer.updated</Name>
+</Input>
+</top>
+</Inputs>
+</InputsForOperation>
+<InputsForOperation><Operation>deleteCustomer</Operation>
+<Inputs><top><Input><Name>Parameters</Name>
+</Input>
+<Input><Name>Parameters.id</Name>
+</Input>
+</top>
+</Inputs>
+</InputsForOperation>
+<InputsForOperation><Operation>getCustomer</Operation>
+<Inputs><top><Input><Name>Parameters</Name>
+</Input>
+<Input><Name>Parameters.id</Name>
+</Input>
+</top>
+</Inputs>
+</InputsForOperation>
+<InputsForOperation><Operation>getCustomers</Operation>
+<Inputs />
+</InputsForOperation>
+<InputsForOperation><Operation>searchCustomers</Operation>
+<Inputs><top><Input><Name>Parameters</Name>
+</Input>
+<Input><Name>Parameters.SEARCH_FIELD</Name>
+</Input>
+<Input><Name>Parameters.SEARCH_VALUE</Name>
+</Input>
+</top>
+</Inputs>
+</InputsForOperation>
+<InputsForOperation><Operation>updateCustomer</Operation>
+<Inputs><top><Input><Name>customer</Name>
+</Input>
+<Input><Name>customer.address</Name>
+</Input>
+<Input><Name>customer.balance</Name>
+</Input>
+<Input><Name>customer.city</Name>
+</Input>
+<Input><Name>customer.id</Name>
+</Input>
+<Input><Name>customer.name</Name>
+</Input>
+<Input><Name>customer.phone</Name>
+</Input>
+<Input><Name>customer.status</Name>
+</Input>
+<Input><Name>customer.updated</Name>
+</Input>
+</top>
+</Inputs>
+</InputsForOperation>
+</OverridenInputs>
+</Input>
+<Input name="OperationName">all</Input>
+<Input name="ContextVariables"><ContextVariables><ValuesForOperation><Operation>byStatus</Operation>
+<Mappings />
+</ValuesForOperation>
+<ValuesForOperation><Operation>byExactStatus</Operation>
+<Mappings />
+</ValuesForOperation>
+<ValuesForOperation><Operation>all</Operation>
+<Mappings />
+</ValuesForOperation>
+<ValuesForOperation><Operation>getOrderDetails</Operation>
+<Mappings />
+</ValuesForOperation>
+</ContextVariables>
+</Input>
+<Input name="OperationDescription">[no description]
+Parameters:
+	Name:			results</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc7"><BuilderDefID>com.bowstreet.builders.webapp.ViewAndFormBuilder</BuilderDefID>
+<Messages><Warning><Message>This BuilderCall creates an element name or ID "name" which hides standard properties of the HTML form element.</Message>
+</Warning>
+</Messages>
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="BuilderCallCategory">General</Input>
+<Input name="UseTheme">false</Input>
+<Input name="ViewPageURL">${Properties/bowstreet.Theme/ViewAndForm_ViewPageBase}</Input>
+<Input name="EnableDataPaging">true</Input>
+<Input name="CreateInputPage">false</Input>
+<Input name="InputPageURL">${Properties/bowstreet.Theme/ViewAndForm_InputPageBase}</Input>
+<Input name="EnableInputValidation">false</Input>
+<Input name="InputSubmitText">Submit</Input>
+<Input name="ViewPageBackButtonText">Back</Input>
+<Input name="InsertInputPage">false</Input>
+<Input name="CreateColumnLink">true</Input>
+<Input name="LinkActionChoice">rowdata</Input>
+<Input name="DetailPageURL">${Properties/bowstreet.Theme/ViewAndForm_DetailPageBase}</Input>
+<Input name="DetailPageHTMLTemplate">${Properties/bowstreet.Theme/ViewAndForm_DetailPageHTMLTemplate}</Input>
+<Input name="DetailPageBackButtonText">Back</Input>
+<Input name="CreateUpdatePage">false</Input>
+<Input name="UpdateAutoInitializeData">true</Input>
+<Input name="UpdatePageURL">${Properties/bowstreet.Theme/ViewAndForm_UpdatePageBase}</Input>
+<Input name="EnableUpdateValidation">false</Input>
+<Input name="UpdateLinkText">Edit</Input>
+<Input name="UpdateSubmitText">Submit</Input>
+<Input name="UpdateCancelText">Cancel</Input>
+<Input name="CreateMain">true</Input>
+<Input name="ViewPageHTMLTemplate">${Properties/bowstreet.Theme/ViewAndForm_ViewPageHTMLTemplate}</Input>
+<Input name="InputPageHTMLTemplate">${Properties/bowstreet.Theme/ViewAndForm_InputPageHTMLTemplate}</Input>
+<Input name="Name">CustomerView</Input>
+<Input name="ViewMethod">DataServices/Customer/getCustomers</Input>
+<Input name="RowsPerPage">5</Input>
+<Input name="ModelName">factory/portletbase/view_and_form_base</Input>
+<Input name="SetProfiledInputValues">true</Input>
+<Input name="UniquePattern">xyzzy7</Input>
+<Input name="LinkColumn">name</Input>
+<Input name="DetailsMethod">DataServices/Customer/getCustomer</Input>
+<Input name="InputPageStyleSheetOverride">${Properties/bowstreet.Theme/ViewAndForm_InputPageStyleSheetOverrideHTMLTemplate}</Input>
+<Input name="ViewPageStyleSheetOverride">/factory/html_templates/clean.css</Input>
+<Input name="DetailPageStyleSheetOverride">${Properties/bowstreet.Theme/ViewAndForm_DetailStyleSheetOverride}</Input>
+<Input name="EnablePagingButtons">true</Input>
+<Input name="UsePartialRefreshForPaging">false</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc9"><BuilderDefID>com.bowstreet.builders.webapp.DataLayoutBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="MoveLinkToListItem">true</Input>
+<Input name="AddLogging">false</Input>
+<Input name="AutomaticParentSelection">true</Input>
+<Input name="SingleField">[CustomerView_ViewPage]CustomerView_ViewPage/customerList/customerList</Input>
+<Input name="TemplateFile">/factory/data_layout_templates/multiline_list_layout_template.html</Input>
+<Input name="TemplateDescription">This template allows you to generate a list where each list item can contain three columns of data, and three rows. You can use this layout to convert grid table style to a list layout.</Input>
+<Input name="StyleSheetFile">/factory/data_layout_templates/multiline_list_layout.css</Input>
+<Input name="DefaultName">Multi-Line List</Input>
+<Input name="LayoutContainers"><top />
+</Input>
+<Input name="LayoutFields"><top><FieldMapping><Name>left_top</Name>
+<Value>name</Value>
+</FieldMapping>
+<FieldMapping><Name>left_middle</Name>
+<Value>address</Value>
+</FieldMapping>
+<FieldMapping><Name>left_bottom</Name>
+<Value>city</Value>
+</FieldMapping>
+<FieldMapping><Name>center_top</Name>
+<Value>status_LABEL</Value>
+</FieldMapping>
+<FieldMapping><Name>center_middle</Name>
+<Value>status</Value>
+</FieldMapping>
+<FieldMapping><Name>center_bottom</Name>
+<Value>phone</Value>
+</FieldMapping>
+<FieldMapping><Name>right_top</Name>
+<Style />
+<Value>updated_LABEL</Value>
+</FieldMapping>
+<FieldMapping><Name>right_middle</Name>
+<Style />
+<Value>updated</Value>
+</FieldMapping>
+<FieldMapping><Name>right_bottom</Name>
+<Style />
+</FieldMapping>
+</top>
+</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc10"><BuilderDefID>com.bowstreet.builders.webapp.TextBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">false</Input>
+<Input name="QuoteText">false</Input>
+<Input name="ReplaceContents">true</Input>
+<Input name="ReplaceTargetElement">false</Input>
+<Input name="Control">page_header_text</Input>
+<Input name="PageLocation"><SimplePageLocation><Page>AllPages</Page>
+<NameSearch>vf_header</NameSearch>
+</SimplePageLocation>
+</Input>
+<Input name="LookupTable">None</Input>
+<Input name="HTMLAttributes"><HTMLAttributes />
+</Input>
+<Input name="Text">&lt;div data-role="page"&gt;&lt;DIV data-role="header" data-theme="b"&gt;&lt;a rel="external" href="#" data-icon="home"&gt;Home&lt;/a&gt;&lt;H1&gt;Customer List&lt;/H1&gt;&lt;a href="#"&gt;Logout&lt;/a&gt;&lt;/DIV&gt;&lt;!-- /header --&gt;</Input>
+</Inputs>
+</BuilderCall>
+</BuilderCallList>
+<Properties><Contained>false</Contained>
+</Properties>
+<Dependencies><Dependency type="Model">samples/scripting/CustomerListProvider</Dependency>
+<Dependency type="Model">factory/portletbase/view_and_form_base</Dependency>
+<Dependency type="File">/factory/pages/mobile/view_and_form/view.html</Dependency>
+<Dependency type="File">/factory/html_templates/form_label_above.html</Dependency>
+<Dependency type="File">/factory/pages/mobile/view_and_form/details.html</Dependency>
+<Dependency type="File">/factory/data_layout_templates/multiline_list_layout_template.html</Dependency>
+<Dependency type="File">/factory/data_layout_templates/multiline_list_layout.css</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery.html</Dependency>
+<Dependency type="File">/samples/script_builder/libraries/jquery_mobile.html</Dependency>
+<Dependency type="File">/factory/pages/data_paging_buttons.html</Dependency>
+<Dependency type="File">/factory/images/paging/firstpg.jpg</Dependency>
+<Dependency type="File">/factory/images/paging/prevpg.jpg</Dependency>
+<Dependency type="File">/factory/images/paging/nextpg.jpg</Dependency>
+<Dependency type="File">/factory/images/paging/lastpg.jpg</Dependency>
+</Dependencies>
+<ExternalProperties />
+</Model>

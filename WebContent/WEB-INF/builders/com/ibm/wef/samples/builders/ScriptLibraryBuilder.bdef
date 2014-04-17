@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<BuilderDef xmlns="http://www.bowstreet.com/2001/Schemas" id="com.ibm.wef.samples.builders.ScriptLibraryBuilder"> 
+  <ReadableName>Script Library</ReadableName> 
+  <GenHandlerClassName>com.bowstreet.builders.webapp.foundation.WebAppGenHandler</GenHandlerClassName> 
+  <HelpFile /> 
+  <RequiredFactoryVersion>8.0.0</RequiredFactoryVersion> 
+  <Description>Adds a JS-based library such as JQuery to the selected pages.  Optionally provides JS access to the Data Service operations in a Service Provider model. 
+</Description> 
+  <Domains> 
+    <Domain>WebApp</Domain> 
+    <Domain>Consumer</Domain>
+    <Domain>Client</Domain>    
+  </Domains> 
+  <CreateModifyList /> 
+  <Category>Custom Builders,Rich UI,Scripting</Category> 
+  <Keywords /> 
+  <BuilderData> 
+    <BuilderDataEntry name="BuilderClassName">com.ibm.wef.samples.builders.ScriptLibraryBuilder</BuilderDataEntry> 
+  </BuilderData> 
+  <CoordinatorClassName>com.ibm.wef.samples.builders.ScriptLibraryCoordinator</CoordinatorClassName> 
+  <InputDefinitions> 
+      <InputDefinition name="Name"  base="com.bowstreet.core.Base.BuilderName" />
+  <InputDefinition name="AllPages"  base="com.bowstreet.core.Base.BooleanData">
+        <Prompt>All Pages</Prompt>
+        <HelpText>Apply to all pages (including any new pages created in the future).</HelpText>
+        <InitialValue>true</InitialValue>
+    </InputDefinition>
+        
+    <InputDefinition name="Pages" >
+      <Prompt>Choose Pages</Prompt>
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <Type>Xml</Type>
+      <ProfileType>XmlElements</ProfileType> 
+      <Callable>true</Callable> 
+      <Editor JavaClass="com.bowstreet.designer.builders.widgets.CheckBoxListWidget">
+        <Argument name="ListData">one,two,three</Argument>
+      </Editor> 
+    </InputDefinition>
+    <InputDefinition name="Libraries" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.Libraries"> 
+  		<UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+    </InputDefinition> 
+    <InputDefinition name="IncludeLibrariesOption" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.IncludeLibrariesOption"> 
+		<UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+    </InputDefinition> 
+    <InputDefinition name="ScriptFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ScriptFile"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <Prompt>Optional Script File</Prompt> 
+      <Group>OptionalComponents</Group>
+      <HelpText>Optional JavaScript file for the pages</HelpText> 
+    </InputDefinition> 
+    <InputDefinition name="CssFile"base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.CssFile"> 
+      <Prompt>Optional CSS File</Prompt> 
+      <Group>OptionalComponents</Group>
+      <HelpText>Optional CSS file for the pages</HelpText> 
+    </InputDefinition> 
+    <InputDefinition name="AddServiceProviderSupport" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.AddServiceProviderSupport"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <InitialValue>false</InitialValue> 
+      <HelpText>Optionally generates JS variables for accessing data from a service provider model</HelpText> 
+    </InputDefinition> 
+    <InputDefinition name="ServiceProvider"  base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ServiceProvider"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+    </InputDefinition> 
+    <InputDefinition name="ServiceVarName" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ServiceVarName"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+    </InputDefinition> 
+    <InputDefinition name="DisableSmartRefresh" base="com.bowstreet.core.Base.BooleanData"> 
+      <Prompt>Disable Smart Refresh</Prompt> 
+      <Group>Advanced</Group>
+      <InitialValue>true</InitialValue>
+      <HelpText>Disable smart refresh</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+ 	<InputDefinition name="DefaultRDD" base="com.bowstreet.core.Base.ServableContent">
+      <Group>Advanced</Group>
+        <Prompt>Default RDD File</Prompt>
+        <HelpText>This is the RDD file that will automatically be applied to all PageAutomation pages.  Leave blank to use the current default.</HelpText>
+        <Required>false</Required>
+        <Editor>
+            <Argument name="filterExtensions">*.xml</Argument>
+        </Editor>
+    </InputDefinition>
+  </InputDefinitions> 
+  <GroupDefinitions> 
+    <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
+    <GroupDefinition id="Libraries" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.Libraries" />
+    <GroupDefinition id="OptionalComponents">
+            <Name>Optional Components</Name>
+            <BorderStyle>Etched</BorderStyle>
+            <IsCollapsible>true</IsCollapsible>
+      <InitiallyCollapsed>false</InitiallyCollapsed> 
+            <Description>Your pages can include optional JS and CSS files that can be used in conjunction with the scripting library.</Description>
+    </GroupDefinition> 
+    <GroupDefinition id="ProviderSupport" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ProviderSupport">
+            <Description>Select a Data Service provider model if you want to call a Data Service from your JS code.   If enabled, a JS variable that has members for the URLs to each of those service operations will be added to the pages.</Description>
+    </GroupDefinition> 
+    <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
+  </GroupDefinitions> 
+  <PageDefinitions /> 
+</BuilderDef> 
+ 
