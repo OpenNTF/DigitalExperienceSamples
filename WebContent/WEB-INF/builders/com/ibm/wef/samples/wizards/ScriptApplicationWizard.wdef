@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<BuilderDef xmlns="http://www.bowstreet.com/2001/Schemas" id="com.ibm.wef.samples.wizards.ScriptApplicationWizard"> 
+  <ReadableName>Script Application</ReadableName> 
+  <GenHandlerClassName>com.bowstreet.builders.webapp.foundation.WebAppGenHandler</GenHandlerClassName> 
+  <HelpFile /> 
+  <RequiredFactoryVersion>7.0.1</RequiredFactoryVersion> 
+  <Description>This wizard builds a model using the Script Application builder to allow you to create a portlet or application that uses your selected scripting library.</Description> 
+  <Domains> 
+	 <Domain>WebApp_Wizard</Domain> 
+  </Domains> 
+  <CreateModifyList /> 
+  <Category>Service Consumers</Category> 
+  <Keywords /> 
+  <BuilderData> 
+    <BuilderDataEntry name="BaseModel">samples/scripting/wizardbase/script_application_base</BuilderDataEntry> 
+  </BuilderData> 
+  <CoordinatorClassName>com.ibm.wef.samples.wizards.ScriptApplicationWizardCoordinator</CoordinatorClassName> 
+  <InputDefinitions> 
+    <InputDefinition name="Name" base="com.bowstreet.core.Base.RestrictedBuilderName">
+      <Required>true</Required> 
+      <Page>Basics</Page>
+      <UseAssociatedCoordinator>true</UseAssociatedCoordinator>    
+    </InputDefinition> 
+    <InputDefinition name="PortletAdapter_BuilderCallEnabled" base="com.bowstreet.core.Base.BooleanData">
+        <Page>Basics</Page>
+        <InitialValue>true</InitialValue>
+        <Prompt>Deploy this model as a portlet</Prompt>     
+    </InputDefinition> 
+    <InputDefinition name="PortletTitle" base="com.bowstreet.adapters.builders.PortletAdapterBuilder.PortletTitle">
+      <Page>Basics</Page>
+ 		<Visible>false</Visible>       
+     </InputDefinition>
+   <InputDefinition name="AddServiceProviderSupport" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.AddServiceProviderSupport">
+        <Page>Basics</Page>
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+    </InputDefinition> 
+    <InputDefinition name="ServiceProvider"  base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ServiceProvider"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <Page>Basics</Page>
+    </InputDefinition> 
+    <InputDefinition name="Libraries" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.Libraries"> 
+  		<UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <InitialValue><top><LibraryEntry><Library>jquery</Library></LibraryEntry></top></InitialValue> 
+      <Page>Library</Page>
+    </InputDefinition> 
+    <InputDefinition name="IncludeLibrariesOption" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.IncludeLibrariesOption"> 
+		<UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <Page>Library</Page>
+    </InputDefinition> 
+ 	<InputDefinition name="HtmlChoices" base="com.bowstreet.core.Base.ComboBox"> 
+      <Prompt>Application Template</Prompt> 
+      <InitialValue /> 
+      <HelpText>Select the application Template</HelpText> 
+      <Required>true</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable>
+      <Editor JavaClass="com.bowstreet.widget.ComboBox">
+		<Argument name="isEditable">false</Argument>
+		<Argument name="listData">empty,chart</Argument>
+       </Editor>
+      <Page>Library</Page>
+    </InputDefinition> 
+    <InputDefinition name="HtmlFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.HtmlFile"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <Visible>false</Visible>
+    </InputDefinition> 
+    <InputDefinition name="ScriptFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ScriptFile"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <Visible>false</Visible>
+    </InputDefinition> 
+    <InputDefinition name="CssFile"base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.CssFile"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+      <Visible>false</Visible>
+    </InputDefinition> 
+  </InputDefinitions> 
+  <GroupDefinitions>
+    <GroupDefinition id="Name">
+      <Name>Name</Name>
+      <Description>Enter a name which will be used as the name of this portlet and to name the builder calls used in the model.</Description>
+      <BorderStyle>Etched</BorderStyle>
+      <IsCollapsible>false</IsCollapsible>
+      <InitiallyCollapsed>false</InitiallyCollapsed>
+    </GroupDefinition>
+    <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
+  </GroupDefinitions> 
+  <PageDefinitions> 
+    <PageDefinition id="Basics"> 
+      <Name>Name and Service</Name> 
+      <Description></Description> 
+    </PageDefinition>   
+     <PageDefinition id="Library"> 
+      <Name>Library and templates Information</Name> 
+      <Description /> 
+    </PageDefinition>
+   </PageDefinitions>
+</BuilderDef> 
+ 

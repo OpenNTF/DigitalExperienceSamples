@@ -21,6 +21,7 @@ import com.bowstreet.generation.DynamicBuilderInputDefinition;
 import com.bowstreet.util.IXml;
 import com.bowstreet.util.StringUtil;
 import com.ibm.wef.samples.builders.ScriptApplicationBuilder.Constants;
+import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
 
 /**
  * Coordinator implementation
@@ -93,7 +94,7 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 
 		// Build list from the files in /samples/script_builder/libraries/
 		try {
-			File dir = new File(BSConfig.getHtmlRootDir() + ScriptApplicationBuilder.SCRIPT_BUILDER_LIBRARIES_FOLDER);
+			File dir = new File(BSConfig.getHtmlRootDir() + SharedConstants.SCRIPT_BUILDER_LIBRARIES_FOLDER);
 
 			// The accept() method is used to filter the files returned from
 			// this method call.

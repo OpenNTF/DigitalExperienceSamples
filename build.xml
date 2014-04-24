@@ -55,7 +55,9 @@ Build file for creating Zip Archive
         <include name="samples/script_builder/**"/>
         <include name="WEB-INF/models/samples/scripting/**"/>
         <include name="WEB-INF/builders/com/ibm/wef/samples/builders/**"/>
+        <include name="WEB-INF/builders/com/ibm/wef/samples/wizards/**"/>
         <include name="WEB-INF/work/source/com/ibm/wef/samples/builders/Script*.*"/>
+        <include name="WEB-INF/work/source/com/ibm/wef/samples/wizards/Script*.*"/>
       </zipfileset>
     </zip>
 

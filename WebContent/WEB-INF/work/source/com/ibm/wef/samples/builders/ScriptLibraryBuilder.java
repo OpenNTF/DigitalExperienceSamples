@@ -23,7 +23,6 @@ import com.bowstreet.builders.webapp.api.Theme;
 import com.bowstreet.builders.webapp.api.VisibilitySetter;
 import com.bowstreet.builders.webapp.foundation.BaseWebAppControlBuilder;
 import com.bowstreet.builders.webapp.foundation.WebAppBuilder;
-import com.bowstreet.builderutilities.CodeFormatter;
 import com.bowstreet.generation.BuilderCall;
 import com.bowstreet.generation.BuilderInputs;
 import com.bowstreet.generation.GenContext;
@@ -31,23 +30,17 @@ import com.bowstreet.util.IXml;
 import com.bowstreet.util.StringUtil;
 import com.bowstreet.util.XmlUtil;
 import com.bowstreet.webapp.DataService;
-import com.bowstreet.webapp.Method;
 import com.bowstreet.webapp.Page;
-import com.bowstreet.webapp.ServiceOperation;
 import com.bowstreet.webapp.WebApp;
 import com.bowstreet.webapp.WebAppObject;
-
+import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
 /**
  * builder regen class for script library  builder
  */
 public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 		WebAppBuilder {
 
-	private static final String FALSE = "false";
-	private static final String HEAD = "HEAD";
-	private static final String IS_RUNNING_STANDALONE_METHOD = "isRunningStandalone";
-	public static final String INCLUDE_ALWAYS_OPTION = "IncludeAlways";
-	public static final String SCRIPT_BUILDER_LIBRARIES_FOLDER = "/samples/script_builder/libraries/";
+	private static final String FALSE = "false"; //$NON-NLS-1$
 
 	protected String getPreferredPhase() {
 		return builderInputs.getString(
@@ -85,9 +78,9 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 			String serviceProvider = builderInputs.getString(
 					Constants.ServiceProvider, null);
 			String serviceVarName = builderInputs.getString(
-					Constants.ServiceVarName, "serviceRestUrls");
+					Constants.ServiceVarName, "serviceRestUrls"); //$NON-NLS-1$
 			String includeLibrariesOption = builderInputs.getString(
-					Constants.IncludeLibrariesOption, INCLUDE_ALWAYS_OPTION);
+					Constants.IncludeLibrariesOption, SharedConstants.INCLUDE_ALWAYS_OPTION);
 
 			if (disableSmartRefresh || !StringUtil.isEmpty(defaultRDD)) {
 				Theme theme = new Theme(builderCall, genContext);
@@ -106,7 +99,7 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 			// variables for the URLs
 			if (addServiceProviderSupport
 					&& !StringUtil.isEmpty(serviceProvider)) {
-				String dataServiceName = "sc";
+				String dataServiceName = "sc"; //$NON-NLS-1$
 				ServiceConsumer2 sc = new ServiceConsumer2(builderCall,
 						genContext);
 				sc.setName(dataServiceName);
@@ -121,34 +114,12 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 				rse.setResultType(RestServiceEnable.BuilderStaticValues.RTVAL_JSON);
 				rse.invokeBuilder();
 
-				// Add JS variable
-				/*
-				 * Form a script similar to this: var
-				 * jqueryImportedJSOrdersSampleRESTURLs = { getOrdersURL:
-				 * "${MethodCall/getOrdersGenerateRestUrl}", getOneOrderURL:
-				 * "${MethodCall/getOneOrderGenerateRestUrl}", deleteOrderURL:
-				 * "${MethodCall/deleteOrderGenerateRestUrl}", createOrderURL:
-				 * "${MethodCall/createOrderGenerateRestUrl}", updateOrderURL:
-				 * "${MethodCall/updateOrderGenerateRestUrl}" }
-				 */
-
 				DataService ds = webApp.getDataService(dataServiceName);
-				if(ds != null){
-					script = "var " + serviceVarName + " = {";
-					Iterator<ServiceOperation> iter = ds.getOperations();
-					while (iter.hasNext()) {
-						ServiceOperation operation = iter.next();
-						String varText = operation.getName()
-								+ "URL: \"${MethodCall/" + operation.getName()
-								+ "GenerateRestUrl}\",\n";
-						script += varText;
-	
-					}
-					script += "}";
-				}
+				if(ds != null)
+					script = com.ibm.wef.samples.builders.ScriptApplicationBuilder.getScript(serviceVarName, ds);
 			}
 			if (!allPages && pages == null) {
-				builderCall.addMessage(BuilderCall.SEVERITY_ERROR, "no Pages");
+				builderCall.addMessage(BuilderCall.SEVERITY_ERROR, "no Pages"); //$NON-NLS-1$
 				return;
 			}
 
@@ -158,15 +129,15 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 				IXml pageIXml = page.getContents();
 				if(pageIXml == null)
 					continue;
-				if(XmlUtil.findElements(pageIXml, "HTML/HEAD").size() == 0){
-					IXml html = pageIXml.findElement("HTML");
+				if(XmlUtil.findElements(pageIXml, "HTML/HEAD").size() == 0){ //$NON-NLS-1$
+					IXml html = pageIXml.findElement(SharedConstants.HTML);
 					if(html == null)
 						continue;
 					IXml target = html.getFirstChildElement();
 					if(target == null)
-						html.addChildElement(XmlUtil.create(HEAD));
+						html.addChildElement(XmlUtil.create(SharedConstants.HEAD));
 					else
-						html.insertBefore(XmlUtil.create(HEAD),target);
+						html.insertBefore(XmlUtil.create(SharedConstants.HEAD),target);
 				}
 					
 				String pageName = page.getName();
@@ -192,8 +163,8 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 					cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Explicit);
 					cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Link);
 					cjs.setScriptExternalLocation(scriptFile);
-					cjs.setPageLocation("Page " + pageName
-							+ " XPath HTML/HEAD InsertAfter");
+					cjs.setPageLocation("Page " + pageName //$NON-NLS-1$
+							+ " XPath HTML/HEAD InsertAfter"); //$NON-NLS-1$
 					cjs.invokeBuilder();
 				}
 				if (!StringUtil.isEmpty(cssFile)) {
@@ -218,19 +189,8 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 			// If conditionally adding JS links, add a method to test for
 			// running in
 			// Portal
-			if (!INCLUDE_ALWAYS_OPTION.equals(includeLibrariesOption)) {
-				if (webApp.getMethod(IS_RUNNING_STANDALONE_METHOD) == null) {
-					CodeFormatter cf = new CodeFormatter();
-					cf.addLine("{");
-					cf.addLine("javax.servlet.http.HttpServletRequest servletRequest = webAppAccess.getHttpServletRequest();");
-					cf.addLine("Object portletRequest = servletRequest.getAttribute(com.bowstreet.adapters.Constants.PORTLET_REQUEST);");
-					cf.addLine("return (portletRequest == null) ? true : false;");
-					cf.addLine("}");
-					Method method = webApp
-							.addMethod(IS_RUNNING_STANDALONE_METHOD);
-					method.setReturnType("boolean");
-					method.setBody(cf.toString());
-				}
+			if (!SharedConstants.INCLUDE_ALWAYS_OPTION.equals(includeLibrariesOption)) {
+				com.ibm.wef.samples.builders.ScriptApplicationBuilder.getConditionalJs(webApp);
 
 			}
 		}
@@ -271,15 +231,15 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 	private void addLibraryReference(WebApp webApp, GenContext genContext,
 			BuilderCall builderCall, String pageName, String libraryName,
 			String includeLibrariesOption) {
-		String libraryPage = libraryName + "_library";
+		String libraryPage = libraryName + "_library"; //$NON-NLS-1$
 		libraryPage = StringUtil.cleanIdentifier(StringUtil.replace(
-				StringUtil.replace(libraryPage, "-", "_"), ".", "_"));
+				StringUtil.replace(libraryPage, "-", "_"), ".", "_")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		if (webApp.getPage(libraryPage) == null) {
 			ImportedPage ip = new ImportedPage(builderCall, genContext);
 			ip.setName(libraryPage);
 			// Form complete library filename by adding folder and
 			// ".html"
-			String libFilename = SCRIPT_BUILDER_LIBRARIES_FOLDER + libraryName
+			String libFilename = SharedConstants.SCRIPT_BUILDER_LIBRARIES_FOLDER + libraryName
 					+ ".html";
 			ip.setURL(libFilename);
 			ip.setAbsoluteURLs(true);
@@ -294,17 +254,17 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 		// insert page into HEAD of main page
 		InsertedPage ins = new InsertedPage(builderCall, genContext);
 		// Location like this: Page main XPath HTML/HEAD
-		ins.setPageLocation("Page " + pageName + " XPath HTML/HEAD");
+		ins.setPageLocation("Page " + pageName + " XPath HTML/HEAD"); //$NON-NLS-1$
 		ins.setPage(libraryPage);
 		ins.setReplaceTargetElement(false);
 		ins.invokeBuilder();
 
-		if (!INCLUDE_ALWAYS_OPTION.equals(includeLibrariesOption)) {
+		if (!SharedConstants.INCLUDE_ALWAYS_OPTION.equals(includeLibrariesOption)) {
 			// Add visibility setter on the entire HTML for the library page
 			VisibilitySetter vs = new VisibilitySetter(builderCall, genContext);
-			vs.setPageLocation("Page " + libraryPage + " XPath HTML");
+			vs.setPageLocation("Page " + libraryPage + " XPath HTML"); //$NON-NLS-1$
 			vs.setComparisonType(VisibilitySetter.BuilderStaticValues.CTVAL_HideWhenFalse);
-			vs.setFirstValue("${MethodCall/isRunningStandalone}");
+			vs.setFirstValue("${MethodCall/isRunningStandalone}"); //$NON-NLS-1$
 			vs.invokeBuilder();
 		}
 	}
@@ -314,19 +274,19 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 	 */
 	static public interface Constants {
 		/* ##GENERATED_BEGIN */
-		public static final String Name = "Name";
-		public static final String Libraries = "Libraries";
-		public static final String AllPages = "AllPages";
-		public static final String Pages = "Pages";
-		public static final String DisableSmartRefresh = "DisableSmartRefresh";
-		public static final String DefaultRDD = "DefaultRDD";
-		public static final String ScriptFile = "ScriptFile";
-		public static final String CssFile = "CssFile";
-		public static final String AddServiceProviderSupport = "AddServiceProviderSupport";
-		public static final String ServiceProvider = "ServiceProvider";
-		public static final String PageName = "PageName";
-		public static final String ServiceVarName = "ServiceVarName";
-		public static final String IncludeLibrariesOption = "IncludeLibrariesOption";
+		public static final String Name = "Name"; //$NON-NLS-1$
+		public static final String Libraries = "Libraries"; //$NON-NLS-1$
+		public static final String AllPages = "AllPages"; //$NON-NLS-1$
+		public static final String Pages = "Pages"; //$NON-NLS-1$
+		public static final String DisableSmartRefresh = "DisableSmartRefresh"; //$NON-NLS-1$
+		public static final String DefaultRDD = "DefaultRDD"; //$NON-NLS-1$
+		public static final String ScriptFile = "ScriptFile"; //$NON-NLS-1$
+		public static final String CssFile = "CssFile"; //$NON-NLS-1$
+		public static final String AddServiceProviderSupport = "AddServiceProviderSupport"; //$NON-NLS-1$
+		public static final String ServiceProvider = "ServiceProvider"; //$NON-NLS-1$
+		public static final String PageName = "PageName"; //$NON-NLS-1$
+		public static final String ServiceVarName = "ServiceVarName"; //$NON-NLS-1$
+		public static final String IncludeLibrariesOption = "IncludeLibrariesOption"; //$NON-NLS-1$
 		/* ##GENERATED_END */
 
 	}
