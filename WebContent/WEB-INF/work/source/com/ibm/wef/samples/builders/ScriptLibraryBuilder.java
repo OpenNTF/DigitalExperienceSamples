@@ -33,14 +33,12 @@ import com.bowstreet.webapp.DataService;
 import com.bowstreet.webapp.Page;
 import com.bowstreet.webapp.WebApp;
 import com.bowstreet.webapp.WebAppObject;
-import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
+import com.ibm.wef.samples.builders.ScriptApplicationBuilder.*;
 /**
  * builder regen class for script library  builder
  */
 public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 		WebAppBuilder {
-
-	private static final String FALSE = "false"; //$NON-NLS-1$
 
 	protected String getPreferredPhase() {
 		return builderInputs.getString(
@@ -86,8 +84,8 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 				Theme theme = new Theme(builderCall, genContext);
 				theme.setOverrideThemeProperties(true);
 				if(disableSmartRefresh){
-					theme.setUse_Smart_Refresh(FALSE);
-					theme.setUse_Smart_Refresh_Contained(FALSE);
+					theme.setUse_Smart_Refresh(com.ibm.wef.samples.builders.ScriptApplicationBuilder.FALSE);
+					theme.setUse_Smart_Refresh_Contained(com.ibm.wef.samples.builders.ScriptApplicationBuilder.FALSE);
 				}
 				if(!StringUtil.isEmpty(defaultRDD))
 					theme.setDefaultRDD(defaultRDD);

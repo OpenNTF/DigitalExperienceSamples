@@ -46,6 +46,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 <Input name="Libraries" xmlProfile="wizardbase.script_app.model:Libraries"></Input>
 <Input name="ServiceProvider" profile="wizardbase.script_app.model:ServiceProvider"></Input>
 <Input name="ServiceVarName" profile="wizardbase.script_app.model:Name"></Input>
+<Input name="DisableSmartRefresh">true</Input>
 </Inputs>
 </BuilderCall>
 </BuilderCallList>

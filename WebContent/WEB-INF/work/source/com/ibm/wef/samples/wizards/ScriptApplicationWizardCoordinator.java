@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +73,7 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 				.findInputDefinition(Constants.ServiceProvider);
 
 		initPickers();
+		defs.htmlChoices.setString("empty");
 		showDeploymentRelatedFields();
 
 		super.initializeInputs(isNewBuilderCall);
@@ -265,8 +267,8 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		}
 
 		// System.out.println("fieldChoices: " + fieldChoices);
-		ArrayList<String> inputList = new ArrayList<String>();
-		inputList.addAll(htmlChoices.keySet());
+		ArrayList<String> inputList = new ArrayList<String>(htmlChoices.keySet());
+		Collections.sort(inputList);
 		updateCombobox(defs.htmlChoices, "listData",
 				StringUtil.buildDelimitedString(inputList, ','));
 	}

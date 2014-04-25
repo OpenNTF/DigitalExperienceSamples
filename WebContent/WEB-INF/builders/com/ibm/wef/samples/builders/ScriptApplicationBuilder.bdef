@@ -8,9 +8,10 @@
 </Description> 
   <Domains> 
     <Domain>WebApp</Domain> 
+    <Domain>Consumer</Domain>
   </Domains> 
   <CreateModifyList /> 
-  <Category>Custom Builders</Category> 
+  <Category>Custom Builders,Rich UI,Scripting</Category> 
   <Keywords /> 
   <BuilderData> 
     <BuilderDataEntry name="BuilderClassName">com.ibm.wef.samples.builders.ScriptApplicationBuilder</BuilderDataEntry> 
@@ -149,6 +150,26 @@
       <ProfileType>Value</ProfileType> 
       <Callable>true</Callable> 
     </InputDefinition> 
+   <InputDefinition name="DisableSmartRefresh" base="com.bowstreet.core.Base.BooleanData"> 
+      <Prompt>Disable Smart Refresh</Prompt> 
+      <Group>Advanced</Group>
+      <InitialValue>true</InitialValue>
+      <HelpText>Disable smart refresh</HelpText> 
+      <Page /> 
+      <Required>false</Required> 
+      <Visible>true</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+ 	<InputDefinition name="DefaultRDD" base="com.bowstreet.core.Base.ServableContent">
+      <Group>Advanced</Group>
+        <Prompt>Default RDD File</Prompt>
+        <HelpText>This is the RDD file that will automatically be applied to all PageAutomation pages.  Leave blank to use the current default.</HelpText>
+        <Required>false</Required>
+        <Editor>
+            <Argument name="filterExtensions">*.xml</Argument>
+        </Editor>
+    </InputDefinition>
   </InputDefinitions> 
   <GroupDefinitions> 
     <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 

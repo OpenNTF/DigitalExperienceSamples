@@ -181,6 +181,8 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 		DynamicBuilderInputDefinition addServiceProviderSupport;
 		DynamicBuilderInputDefinition serviceProvider;
 		DynamicBuilderInputDefinition serviceVarName;
+		DynamicBuilderInputDefinition disableSmartRefresh;
+		DynamicBuilderInputDefinition defaultRDD;
 		/* ##GENERATED_END */
 
 	}

@@ -65,27 +65,13 @@
     <InputDefinition name="ServiceVarName" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ServiceVarName"> 
 	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
     </InputDefinition> 
-    <InputDefinition name="DisableSmartRefresh" base="com.bowstreet.core.Base.BooleanData"> 
-      <Prompt>Disable Smart Refresh</Prompt> 
-      <Group>Advanced</Group>
-      <InitialValue>true</InitialValue>
-      <HelpText>Disable smart refresh</HelpText> 
-      <Page /> 
-      <Required>false</Required> 
-      <Visible>true</Visible> 
-      <ProfileType>Value</ProfileType> 
-      <Callable>true</Callable> 
-    </InputDefinition> 
- 	<InputDefinition name="DefaultRDD" base="com.bowstreet.core.Base.ServableContent">
-      <Group>Advanced</Group>
-        <Prompt>Default RDD File</Prompt>
-        <HelpText>This is the RDD file that will automatically be applied to all PageAutomation pages.  Leave blank to use the current default.</HelpText>
-        <Required>false</Required>
-        <Editor>
-            <Argument name="filterExtensions">*.xml</Argument>
-        </Editor>
+    <InputDefinition name="DisableSmartRefresh" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.DisableSmartRefresh"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
     </InputDefinition>
-  </InputDefinitions> 
+    <InputDefinition name="DefaultRDD" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.DefaultRDD"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+    </InputDefinition>
+   </InputDefinitions> 
   <GroupDefinitions> 
     <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
     <GroupDefinition id="Libraries" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.Libraries" />

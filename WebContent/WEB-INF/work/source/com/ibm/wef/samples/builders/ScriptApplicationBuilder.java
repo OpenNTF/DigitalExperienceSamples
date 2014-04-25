@@ -17,6 +17,7 @@ import com.bowstreet.builders.webapp.api.InsertedPage;
 import com.bowstreet.builders.webapp.api.RestServiceEnable;
 import com.bowstreet.builders.webapp.api.ServiceConsumer2;
 import com.bowstreet.builders.webapp.api.StyleSheet;
+import com.bowstreet.builders.webapp.api.Theme;
 import com.bowstreet.builders.webapp.api.VisibilitySetter;
 import com.bowstreet.builders.webapp.foundation.WebAppBuilder;
 import com.bowstreet.builderutilities.CodeFormatter;
@@ -38,6 +39,8 @@ import com.bowstreet.webapp.WebAppObject;
  */
 public class ScriptApplicationBuilder implements WebAppBuilder {
 	
+	protected static final String FALSE = "false"; //$NON-NLS-1$
+
 
 	/**
 	 * This is the method that's called during generation of the WebApp.
@@ -56,7 +59,24 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		String pageName = builderInputs.getString(Constants.PageName, "main");  //$NON-NLS-1$
 		String serviceVarName = builderInputs.getString(Constants.ServiceVarName, "serviceRestUrls");   //$NON-NLS-1$
 		String includeLibrariesOption = builderInputs.getString(Constants.IncludeLibrariesOption, SharedConstants.INCLUDE_ALWAYS_OPTION);
+		boolean disableSmartRefresh = builderInputs.getBoolean(
+				Constants.DisableSmartRefresh, true);
+		String defaultRDD = builderInputs.getString(
+				Constants.DefaultRDD, null);
 		/* ##GENERATED_BODY_END */
+		if (disableSmartRefresh || !StringUtil.isEmpty(defaultRDD)) {
+			Theme theme = new Theme(builderCall, genContext);
+			theme.setOverrideThemeProperties(true);
+			if(disableSmartRefresh){
+				theme.setUse_Smart_Refresh(FALSE);
+				theme.setUse_Smart_Refresh_Contained(FALSE);
+			}
+			if(!StringUtil.isEmpty(defaultRDD))
+				theme.setDefaultRDD(defaultRDD);
+			theme.invokeBuilder();
+			builderCall.clearMessage(BuilderCall.SEVERITY_WARNING);
+		}
+
 
 		// set readable name to the page name
 		builderInputs.setString(BuilderCall.RESERVEDINPUT_DEFAULTNAME, pageName);
@@ -258,6 +278,8 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		public static final String PageName = "PageName";  //$NON-NLS-1$
 		public static final String ServiceVarName = "ServiceVarName";  //$NON-NLS-1$
 		public static final String IncludeLibrariesOption = "IncludeLibrariesOption";  //$NON-NLS-1$
+		public static final String DisableSmartRefresh = "DisableSmartRefresh"; //$NON-NLS-1$
+		public static final String DefaultRDD = "DefaultRDD"; //$NON-NLS-1$
 		/* ##GENERATED_END */
 	}
 	static public interface SharedConstants {
