@@ -37,7 +37,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 <Messages />
 <Inputs><Input name="BuilderCallEnabled">true</Input>
 <Input name="AddServiceProviderSupport" profile="wizardbase.script_app.model:AddServiceProviderSupport"></Input>
-<Input name="PageName" profile="wizardbase.script_app.model:Name"></Input>
+<Input name="PageName">main</Input>
 <Input name="HtmlFile" profile="wizardbase.script_app.model:HtmlFile"></Input>
 <Input name="DefaultName" profile="wizardbase.script_app.model:Name">main</Input>
 <Input name="ScriptFile" profile="wizardbase.script_app.model:ScriptFile"></Input>
