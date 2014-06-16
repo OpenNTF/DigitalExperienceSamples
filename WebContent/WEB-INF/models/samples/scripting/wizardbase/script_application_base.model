@@ -38,11 +38,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
 <Inputs><Input name="BuilderCallEnabled">true</Input>
 <Input name="AddServiceProviderSupport" profile="wizardbase.script_app.model:AddServiceProviderSupport"></Input>
 <Input name="PageName">main</Input>
+<Input name="SingleFileAPP" profile="wizardbase.script_app.model:SingleFileAPP">AddLibraries</Input>
 <Input name="HtmlFile" profile="wizardbase.script_app.model:HtmlFile"></Input>
 <Input name="DefaultName" profile="wizardbase.script_app.model:Name">main</Input>
 <Input name="ScriptFile" profile="wizardbase.script_app.model:ScriptFile"></Input>
 <Input name="CssFile" profile="wizardbase.script_app.model:CssFile"></Input>
-<Input name="IncludeLibrariesOption" profile="wizardbase.script_app.model:IncludeLibrariesOption"></Input>
+<Input name="IncludeLibrariesOption" profile="wizardbase.script_app.model:IncludeLibrariesOption">OmitWhenInPortal</Input>
 <Input name="Libraries" xmlProfile="wizardbase.script_app.model:Libraries"></Input>
 <Input name="ServiceProvider" profile="wizardbase.script_app.model:ServiceProvider"></Input>
 <Input name="ServiceVarName" profile="wizardbase.script_app.model:Name"></Input>

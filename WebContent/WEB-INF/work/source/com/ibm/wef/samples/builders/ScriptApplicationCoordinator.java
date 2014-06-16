@@ -39,13 +39,19 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 		/* ##GENERATED_BODY_BEGIN#CoordinatorDefInitCode# */
 		// Generated code to initialize all the input definitions
 		defs.name = context.findInputDefinition(Constants.Name);
+		defs.singleFileAPP = context.findInputDefinition(Constants.SingleFileAPP);
+		defs.includeLibrariesOption = context.findInputDefinition(Constants.IncludeLibrariesOption);
 		defs.libraries = context.findInputDefinition(Constants.Libraries);
 		defs.htmlFile = context.findInputDefinition(Constants.HtmlFile);
+		defs.pageName = context.findInputDefinition(Constants.PageName);
 		defs.scriptFile = context.findInputDefinition(Constants.ScriptFile);
 		defs.cssFile = context.findInputDefinition(Constants.CssFile);
 		defs.addServiceProviderSupport = context.findInputDefinition(Constants.AddServiceProviderSupport);
 		defs.serviceProvider = context.findInputDefinition(Constants.ServiceProvider);
 		defs.serviceVarName = context.findInputDefinition(Constants.ServiceVarName);
+		String singleFileApp = defs.singleFileAPP.getString();
+		if(StringUtil.isEmpty(singleFileApp))
+			defs.singleFileAPP.setString((String)defs.singleFileAPP.getInitialValue());
 		/* ##GENERATED_BODY_END */
 
 		// All the builder input definitions are now available using the
@@ -66,7 +72,12 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 		boolean addProviderSupport = defs.addServiceProviderSupport.getBoolean();
 		defs.serviceVarName.setVisible(addProviderSupport);
 		defs.serviceProvider.setVisible(addProviderSupport);
-		
+		boolean addLibraries = SharedConstants.ADDLIBRARIES.equals(defs.singleFileAPP.getString());
+		defs.libraries.setVisible(addLibraries);
+		defs.pageName.setVisible(addLibraries);
+		defs.scriptFile.setVisible(addLibraries);
+		defs.cssFile.setVisible(addLibraries);
+		defs.includeLibrariesOption.setVisible(addLibraries);
 	}
 
 	/**
@@ -75,7 +86,7 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 	 */
 	public boolean processInputChange(DynamicBuilderInputDefinition changed) {
 
-		if (changed == defs.addServiceProviderSupport) {
+		if (changed == defs.addServiceProviderSupport || changed == defs.singleFileAPP) {
 			setVisibility();
 			return true;
 		}
@@ -174,8 +185,11 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 	static class InputDefinitions {
 		/* ##GENERATED_BEGIN */
 		DynamicBuilderInputDefinition name;
+		DynamicBuilderInputDefinition singleFileAPP;
 		DynamicBuilderInputDefinition libraries;
+		DynamicBuilderInputDefinition includeLibrariesOption;
 		DynamicBuilderInputDefinition htmlFile;
+		DynamicBuilderInputDefinition pageName;
 		DynamicBuilderInputDefinition scriptFile;
 		DynamicBuilderInputDefinition cssFile;
 		DynamicBuilderInputDefinition addServiceProviderSupport;

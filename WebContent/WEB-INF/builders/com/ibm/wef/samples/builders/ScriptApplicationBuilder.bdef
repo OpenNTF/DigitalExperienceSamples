@@ -18,15 +18,20 @@
   </BuilderData> 
   <CoordinatorClassName>com.ibm.wef.samples.builders.ScriptApplicationCoordinator</CoordinatorClassName> 
   <InputDefinitions> 
-    <InputDefinition name="Name" base="com.bowstreet.core.Base.BuilderName"> 
-      <Prompt>Name (Optional)</Prompt> 
-      <InitialValue /> 
+  <InputDefinition name="Name"  base="com.bowstreet.core.Base.BuilderName" />
+  <InputDefinition name="SingleFileAPP" base="com.bowstreet.core.Base.StringData"> 
+      <Prompt>Add Libraries</Prompt> 
+      <InitialValue>AddLibraries</InitialValue> 
       <HelpText /> 
       <Page /> 
       <Required>false</Required> 
-      <Visible>false</Visible> 
+      <Visible>true</Visible> 
       <ProfileType>Value</ProfileType> 
       <Callable>true</Callable> 
+      <Editor JavaClass="com.bowstreet.widget.RadioBox"> 
+        <Argument name="ListData" inheritable="true">AddLibraries,SingleFileApp</Argument> 
+        <Argument name="ListLabels" inheritable="true">Add JS libraries,Libraries already referenced in HTML</Argument> 
+      </Editor> 
     </InputDefinition> 
     <InputDefinition name="Libraries" base="com.bowstreet.core.Base.Arguments"> 
       <Prompt>Libraries</Prompt> 

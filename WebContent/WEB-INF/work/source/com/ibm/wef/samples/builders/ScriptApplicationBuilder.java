@@ -51,6 +51,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		/* ##GENERATED_BODY_BEGIN#InputAccessorCode# */
 		// Generated code to get all the builder inputs
 		IXml libraries = builderInputs.getXml(Constants.Libraries, null);
+		String singleFileAPP = builderInputs.getString(Constants.SingleFileAPP, null);
 		String htmlFile = builderInputs.getString(Constants.HtmlFile, null);
 		String scriptFile = builderInputs.getString(Constants.ScriptFile, null);
 		String cssFile = builderInputs.getString(Constants.CssFile, null);
@@ -91,36 +92,44 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 			ip.setURLModification(ImportedPage.BuilderStaticValues.URLMVAL_Relative);
 			ip.invokeBuilder();
 		}
-		// Add each library by importing a page then inserting it
-		if (libraries != null) {
-			for (@SuppressWarnings("rawtypes")  //$NON-NLS-1$
-			Iterator iterator = libraries.getChildren().iterator(); iterator.hasNext();) {
-				IXml libraryEntry = (IXml) iterator.next();
-				String libraryName = libraryEntry.getText("Library");  //$NON-NLS-1$
-				if (libraryName != null) {
-					addLibraryReference(genContext, webApp, builderCall, pageName, libraryName, includeLibrariesOption);
+		
+		// If a single file app then don't add any libraies, css or js files.
+		if(!SharedConstants.ADDLIBRARIES.equals(singleFileAPP)){
+			// Add each library by importing a page then inserting it
+			if (libraries != null) {
+				for (@SuppressWarnings("rawtypes")  //$NON-NLS-1$
+				Iterator iterator = libraries.getChildren().iterator(); iterator.hasNext();) {
+					IXml libraryEntry = (IXml) iterator.next();
+					String libraryName = libraryEntry.getText("Library");  //$NON-NLS-1$
+					if (libraryName != null) {
+						addLibraryReference(genContext, webApp, builderCall, pageName, libraryName, includeLibrariesOption);
+					}
 				}
 			}
-		}
-		// Add CSS and JS, if specified
-		if (!StringUtil.isEmpty(scriptFile)) {
-			ClientJavaScript cjs = new ClientJavaScript(builderCall, genContext);
-			cjs.setPageName(pageName);
-			cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Explicit);
-			cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Link);
-			cjs.setScriptExternalLocation(scriptFile);
-			cjs.setPageLocation("Page " + pageName + " XPath HTML/HEAD InsertAfter");  //$NON-NLS-1$  //$NON-NLS-2$
-			cjs.invokeBuilder();
-		}
-		if (!StringUtil.isEmpty(cssFile)) {
-			StyleSheet ss = new StyleSheet(builderCall, genContext);
-			ss.setExternalLocation(cssFile);
-			ss.setPageLocationType(StyleSheet.BuilderStaticValues.PLTVAL_Implicit);
-			ss.setPageName(pageName);
-			ss.setSourceType(StyleSheet.BuilderStaticValues.STVAL_Link);
-			ss.invokeBuilder();
-		}
+			// Add CSS and JS, if specified
+			if (!StringUtil.isEmpty(scriptFile)) {
+				ClientJavaScript cjs = new ClientJavaScript(builderCall, genContext);
+				cjs.setPageName(pageName);
+				cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Explicit);
+				cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Link);
+				cjs.setScriptExternalLocation(scriptFile);
+				cjs.setPageLocation("Page " + pageName + " XPath HTML/HEAD InsertAfter");  //$NON-NLS-1$  //$NON-NLS-2$
+				cjs.invokeBuilder();
+			}
+			if (!StringUtil.isEmpty(cssFile)) {
+				StyleSheet ss = new StyleSheet(builderCall, genContext);
+				ss.setExternalLocation(cssFile);
+				ss.setPageLocationType(StyleSheet.BuilderStaticValues.PLTVAL_Implicit);
+				ss.setPageName(pageName);
+				ss.setSourceType(StyleSheet.BuilderStaticValues.STVAL_Link);
+				ss.invokeBuilder();
+			}
 
+			// If conditionally adding JS links, add a method to test for running in Portal
+			if (!SharedConstants.INCLUDE_ALWAYS_OPTION.equals(includeLibrariesOption)) {
+				getConditionalJs(webApp);
+			}
+		}
 		// add ServiceConsumer if specified, REST enable it, and create JS
 		// variables for the URLs
 		if (addServiceProviderSupport && !StringUtil.isEmpty(serviceProvider)) {
@@ -155,10 +164,6 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 			else
 				builderCall.addMessage(BuilderCall.SEVERITY_ERROR, "Data service not found");  //$NON-NLS-1$
 		}
-		// If conditionally adding JS links, add a method to test for running in Portal
-		if (!SharedConstants.INCLUDE_ALWAYS_OPTION.equals(includeLibrariesOption)) {
-			getConditionalJs(webApp);
-		}
 	}
 
 	protected static String getScript(String serviceVarName, DataService ds) {
@@ -190,7 +195,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 			CodeFormatter cf = new CodeFormatter();
 			cf.addLine("{"); //$NON-NLS-1$
 			cf.addLine("javax.servlet.http.HttpServletRequest servletRequest = webAppAccess.getHttpServletRequest();"); //$NON-NLS-1$
-			cf.addLine("Object portletRequest = servletRequest.getAttribute(com.bowstreet.adapters.SharedConstants.PORTLET_REQUEST);"); //$NON-NLS-1$
+			cf.addLine("Object portletRequest = servletRequest.getAttribute(com.bowstreet.adapters.Constants.PORTLET_REQUEST);"); //$NON-NLS-1$
 			cf.addLine("return (portletRequest == null) ? true : false;"); //$NON-NLS-1$
 			cf.addLine("}"); //$NON-NLS-1$
 			Method method = webApp
@@ -269,6 +274,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 	static public interface Constants {
 		/* ##GENERATED_BEGIN */
 		public static final String Name = "Name"; //$NON-NLS-1$
+		public static final String SingleFileAPP = "SingleFileAPP";  //$NON-NLS-1$
 		public static final String Libraries = "Libraries";  //$NON-NLS-1$
 		public static final String HtmlFile = "HtmlFile";  //$NON-NLS-1$
 		public static final String ScriptFile = "ScriptFile";  //$NON-NLS-1$
@@ -285,6 +291,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 	static public interface SharedConstants {
 		public static final String HTML_HEAD = "HTML/HEAD"; //$NON-NLS-1$
 		public static final String IS_RUNNING_STANDALONE_METHOD = "isRunningStandalone"; //$NON-NLS-1$
+		public static final String ADDLIBRARIES = "AddLibraries"; //$NON-NLS-1$
 		public static final String INCLUDE_ALWAYS_OPTION = "IncludeAlways"; //$NON-NLS-1$
 		public static final String SCRIPT_BUILDER_LIBRARIES_FOLDER = "/samples/script_builder/libraries/"; //$NON-NLS-1$
 		public static final String HEAD = "HEAD"; //$NON-NLS-1$

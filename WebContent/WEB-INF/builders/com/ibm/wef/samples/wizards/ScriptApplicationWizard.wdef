@@ -23,7 +23,6 @@
     </InputDefinition> 
     <InputDefinition name="PortletAdapter_BuilderCallEnabled" base="com.bowstreet.core.Base.BooleanData">
         <Page>Basics</Page>
-        <InitialValue>true</InitialValue>
         <Prompt>Deploy this model as a portlet</Prompt>     
     </InputDefinition> 
     <InputDefinition name="PortletTitle" base="com.bowstreet.adapters.builders.PortletAdapterBuilder.PortletTitle">
@@ -38,13 +37,25 @@
 	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
       <Page>Basics</Page>
     </InputDefinition> 
-    <InputDefinition name="Libraries" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.Libraries"> 
+   <InputDefinition name="DispLibraryInstruction"   base="com.bowstreet.core.Base.ReadOnlyStringData">
+        <Prompt></Prompt>
+        <HelpText></HelpText>
+        <Visible>true</Visible>
+        <Editor>
+            <Argument name="label">Script library files are used to identify the JS/CSS files used for a particular library.  These libraries are HTML files in the folder /samples/script_builder/libraries/.   Libraries with a suffix "cdn" are loaded from hosted web servers; for other libraries you will need to provide the required files.  To add a new library, add an HTML file in that folder with references to the desired JS/CSS files.</Argument>
+            <Argument name="foreground">blue</Argument>
+        </Editor>
+      <Page>Library</Page>
+    </InputDefinition>
+     <InputDefinition name="Libraries" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.Libraries"> 
   		<UseAssociatedCoordinator>true</UseAssociatedCoordinator>
       <InitialValue><top><LibraryEntry><Library>jquery</Library></LibraryEntry></top></InitialValue> 
+        <Group>Libraries</Group>
       <Page>Library</Page>
     </InputDefinition> 
     <InputDefinition name="IncludeLibrariesOption" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.IncludeLibrariesOption"> 
 		<UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+        <InitialValue>OmitWhenInPortal</InitialValue>
       <Page>Library</Page>
     </InputDefinition> 
  	<InputDefinition name="HtmlChoices" base="com.bowstreet.core.Base.ComboBox"> 
@@ -61,11 +72,17 @@
        </Editor>
       <Page>Library</Page>
     </InputDefinition> 
-    <InputDefinition name="HtmlFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.HtmlFile"> 
+    <InputDefinition name="SingleFileAPP" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.SingleFileAPP"> 
 	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
-      <Visible>false</Visible>
+	  <InitialValue>AddLibraries</InitialValue>
+       <Page>Basics</Page>
     </InputDefinition> 
-    <InputDefinition name="ScriptFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ScriptFile"> 
+     <InputDefinition name="HtmlFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.HtmlFile"> 
+	  <UseAssociatedCoordinator>false</UseAssociatedCoordinator>
+      <Visible>false</Visible>
+        <Page>Library</Page>
+    </InputDefinition> 
+   <InputDefinition name="ScriptFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ScriptFile"> 
 	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
       <Visible>false</Visible>
     </InputDefinition> 
@@ -83,6 +100,13 @@
       <InitiallyCollapsed>false</InitiallyCollapsed>
     </GroupDefinition>
     <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
+    <GroupDefinition id="Libraries">
+            <Name>Script Libraries</Name>
+            <BorderStyle>Etched</BorderStyle>
+            <IsCollapsible>true</IsCollapsible>
+      <InitiallyCollapsed>false</InitiallyCollapsed> 
+            <Description>Script library files are used to identify the JS/CSS files used for a particular library.  These libraries are HTML files in the folder /samples/script_builder/libraries/.   Libraries with a suffix "cdn" are loaded from hosted web servers; for other libraries you will need to provide the required files.  To add a new library, add an HTML file in that folder with references to the desired JS/CSS files.</Description>
+    </GroupDefinition> 
   </GroupDefinitions> 
   <PageDefinitions> 
     <PageDefinition id="Basics"> 

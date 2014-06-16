@@ -29,6 +29,7 @@ import com.bowstreet.BSConfig;
 import com.bowstreet.editor.uitools.coordinator.WebAppBaseCoordinator;
 import com.bowstreet.generation.DynamicBuilderInputDefinition;
 import com.bowstreet.util.StringUtil;
+import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
 
 /**
  * Coordinator implementation
@@ -39,6 +40,7 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 	private static final String SAMPLES_SCRIPTING_WIZARD_PAGES = "/samples/script_builder/wizard_templates"; //$NON-NLS-1$
 	private static final String SAMPLES_SCRIPTING = "/samples/apps/"; //$NON-NLS-1$
 	private static final String EMPTY = ""; //$NON-NLS-1$
+	private static final String TEMPLATE_DEFAULT = "base-script-app"; //$NON-NLS-1$
 	private static final String HTML = ".html"; //$NON-NLS-1$
 	private static final String CSS = ".css"; //$NON-NLS-1$
 	private static final String JS = ".js"; //$NON-NLS-1$
@@ -58,12 +60,13 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 	public String initializeInputs(boolean isNewBuilderCall) {
 		defs.name = context.findInputDefinition(Constants.Name);
 		defs.portletTitle = context.findInputDefinition(Constants.PortletTitle);
+		defs.singleFileAPP = context.findInputDefinition(Constants.SingleFileAPP);
+		defs.dispLibraryInstruction = context.findInputDefinition(Constants.DispLibraryInstruction);
 		defs.cssFile = context.findInputDefinition(Constants.CssFile);
 		defs.htmlFile = context.findInputDefinition(Constants.HtmlFile);
 		defs.scriptFile = context.findInputDefinition(Constants.ScriptFile);
 		defs.htmlChoices = context.findInputDefinition(Constants.HtmlChoices);
-		defs.includeLibrariesOption = context
-				.findInputDefinition(Constants.IncludeLibrariesOption);
+		defs.includeLibrariesOption = context.findInputDefinition(Constants.IncludeLibrariesOption);
 		defs.libraries = context.findInputDefinition(Constants.Libraries);
 		defs.portletAdapter_BuilderCallEnabled = context
 				.findInputDefinition(Constants.PortletAdapter_BuilderCallEnabled);
@@ -71,9 +74,10 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 				.findInputDefinition(Constants.AddServiceProviderSupport);
 		defs.serviceProvider = context
 				.findInputDefinition(Constants.ServiceProvider);
-
+		defs.portletAdapter_BuilderCallEnabled.setBoolean(false);
+		defs.singleFileAPP.setString(SharedConstants.ADDLIBRARIES);
 		initPickers();
-		defs.htmlChoices.setString("empty");
+		defs.htmlChoices.setString(TEMPLATE_DEFAULT);
 		showDeploymentRelatedFields();
 
 		super.initializeInputs(isNewBuilderCall);
@@ -102,8 +106,20 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		} else if (changed == defs.portletAdapter_BuilderCallEnabled) {
 			showDeploymentRelatedFields();
 			return true;
+		} else if (changed == defs.singleFileAPP) {
+			showLibrayRelatedFields();
+			return true;
 		}
 		return false;
+	}
+
+	private void showLibrayRelatedFields() {
+		boolean addLibraries = SharedConstants.ADDLIBRARIES.equals(defs.singleFileAPP.getString());
+		defs.dispLibraryInstruction.setVisible(addLibraries);
+		defs.libraries.setVisible(addLibraries);
+		defs.htmlChoices.setVisible(addLibraries);
+		defs.htmlFile.setVisible(!addLibraries);
+		defs.includeLibrariesOption.setVisible(addLibraries);
 	}
 
 	private boolean checkFolder(String name) {
@@ -115,17 +131,20 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 	}
 
 	public void terminate() {
-		String htmlChoice = defs.htmlChoices.getString();
-		String name = defs.name.getString();
-		String htmlFile = getNewFile(htmlChoices.get(htmlChoice), name, tHtml);
-		defs.htmlFile.setString(htmlFile);
-		if (htmlFile != null) {
-			String cssFile = getNewFile(cssChoices.get(htmlChoice), name, tCss);
-			defs.cssFile.setString(cssFile);
-
-			String scriptFile = getNewFile(scriptChoices.get(htmlChoice), name,
-					tJs);
-			defs.scriptFile.setString(scriptFile);
+		super.terminate();
+		if(SharedConstants.ADDLIBRARIES.equals(defs.singleFileAPP.getString())){
+			String htmlChoice = defs.htmlChoices.getString();
+			String name = defs.name.getString();
+			String htmlFile = getNewFile(htmlChoices.get(htmlChoice), name, tHtml);
+			defs.htmlFile.setString(htmlFile);
+			if (htmlFile != null) {
+				String cssFile = getNewFile(cssChoices.get(htmlChoice), name, tCss);
+				defs.cssFile.setString(cssFile);
+	
+				String scriptFile = getNewFile(scriptChoices.get(htmlChoice), name,
+						tJs);
+				defs.scriptFile.setString(scriptFile);
+			}
 		}
 	}
 
@@ -161,6 +180,14 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 			if (type == tHtml)
 				// html page is always index.html so set dest to index.html
 				fileName = "index.html"; //$NON-NLS-1$
+			else{
+				if(fileName.startsWith("base-script-app")){
+					if(type == tCss)
+						fileName = "base.css"; //$NON-NLS-1$
+					else
+						fileName = "base.js"; //$NON-NLS-1$
+				}
+			}
 
 			String fName = destFileDir + '/' + fileName;
 			File destFile = new File(fName);
@@ -201,6 +228,7 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		DynamicBuilderInputDefinition name;
 		DynamicBuilderInputDefinition portletAdapter_BuilderCallEnabled;
 		DynamicBuilderInputDefinition portletTitle;
+		DynamicBuilderInputDefinition dispLibraryInstruction;
 		DynamicBuilderInputDefinition libraries;
 		DynamicBuilderInputDefinition includeLibrariesOption;
 		DynamicBuilderInputDefinition htmlFile;
@@ -209,12 +237,15 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		DynamicBuilderInputDefinition cssFile;
 		DynamicBuilderInputDefinition addServiceProviderSupport;
 		DynamicBuilderInputDefinition serviceProvider;
+		DynamicBuilderInputDefinition singleFileAPP;
 	}
 
 	static public interface Constants {
 		public static final String Name = "Name"; //$NON-NLS-1$
 		public static final String PortletAdapter_BuilderCallEnabled = "PortletAdapter_BuilderCallEnabled"; //$NON-NLS-1$
 		public static final String PortletTitle = "PortletTitle"; //$NON-NLS-1$
+		public static final String SingleFileAPP = "SingleFileAPP"; //$NON-NLS-1$
+		public static final String DispLibraryInstruction = "DispLibraryInstruction"; //$NON-NLS-1$
 		public static final String Libraries = "Libraries"; //$NON-NLS-1$
 		public static final String IncludeLibrariesOption = "IncludeLibrariesOption"; //$NON-NLS-1$
 		public static final String HtmlChoices = "HtmlChoices"; //$NON-NLS-1$

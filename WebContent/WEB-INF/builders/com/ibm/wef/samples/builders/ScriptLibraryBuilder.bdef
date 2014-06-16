@@ -19,7 +19,7 @@
   </BuilderData> 
   <CoordinatorClassName>com.ibm.wef.samples.builders.ScriptLibraryCoordinator</CoordinatorClassName> 
   <InputDefinitions> 
-      <InputDefinition name="Name"  base="com.bowstreet.core.Base.BuilderName" />
+  <InputDefinition name="Name"  base="com.bowstreet.core.Base.BuilderName" />
   <InputDefinition name="AllPages"  base="com.bowstreet.core.Base.BooleanData">
         <Prompt>All Pages</Prompt>
         <HelpText>Apply to all pages (including any new pages created in the future).</HelpText>
