@@ -20,7 +20,7 @@
   <InputDefinitions> 
   <InputDefinition name="Name"  base="com.bowstreet.core.Base.BuilderName" />
   <InputDefinition name="SingleFileAPP" base="com.bowstreet.core.Base.StringData"> 
-      <Prompt>Add Libraries</Prompt> 
+      <Prompt>Libraries</Prompt> 
       <InitialValue>AddLibraries</InitialValue> 
       <HelpText /> 
       <Page /> 
@@ -30,11 +30,11 @@
       <Callable>true</Callable> 
       <Editor JavaClass="com.bowstreet.widget.RadioBox"> 
         <Argument name="ListData" inheritable="true">AddLibraries,SingleFileApp</Argument> 
-        <Argument name="ListLabels" inheritable="true">Add JS libraries,Libraries already referenced in HTML</Argument> 
+        <Argument name="ListLabels" inheritable="true">Add library references to page,Use imported HTML as is</Argument> 
       </Editor> 
     </InputDefinition> 
     <InputDefinition name="Libraries" base="com.bowstreet.core.Base.Arguments"> 
-      <Prompt>Libraries</Prompt> 
+      <Prompt>Library References</Prompt> 
       <Group>Libraries</Group>
       <InitialValue /> 
       <HelpText>Select libraries with JS/CSS</HelpText> 
@@ -183,7 +183,7 @@
             <BorderStyle>Etched</BorderStyle>
             <IsCollapsible>true</IsCollapsible>
       <InitiallyCollapsed>false</InitiallyCollapsed> 
-            <Description>Script library files are used to identify the JS/CSS files used for a particular library.  These libraries are HTML files in the folder /samples/script_builder/libraries/.   Libraries with a suffix "cdn" are loaded from hosted web servers; for other libraries you will need to provide the required files.  To add a new library, add an HTML file in that folder with references to the desired JS/CSS files.</Description>
+            <Description>Script library files are used to identify the JS/CSS files used for a particular library.  These libraries are HTML files in the folder /samples/script_builder/libraries/.  To add a new library, add an HTML file in that folder with references to the desired JS/CSS files.</Description>
     </GroupDefinition> 
     <GroupDefinition id="ApplicationCode">
             <Name>Application Code</Name>

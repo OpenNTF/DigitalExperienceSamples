@@ -7,6 +7,26 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the 
  * specific language governing permissions and limitations under the License.
 */
+
+/* sample of ready function when using jQuery
+$(document).ready(
+		function() {
+			// an example with a data service and a variable created by wef to access it 
+			// see if "customersServiceUrls" variable is available, with members for URLs
+			// for REST services
+			if (typeof customersServiceUrls == "undefined") {
+				 $('#customerListTable').append("No customerServiceUrls defined");
+			} else {
+				// Fetch dynamic JSON sing WEF REST Enabled Data Service REST URL
+				$.getJSON(customersServiceUrls.getCustomersURL, {}, function(ajaxData) {
+					// console.log("ajaxData: " + JSON.stringify(ajaxData));
+					displayDataTable(ajaxData.customerList.customer, "customerListTable");
+				});
+			}
+			;
+		});
+*/
+
 // named tags on page
 var namedTags = [ {
 	"Tag" : "wefBody",
@@ -27,10 +47,5 @@ var namedTags = [ {
 }, {
 	"Tag" : "footer",
 } ];
-$(document).ready(
-		function() {
-
-		});
-
 
 

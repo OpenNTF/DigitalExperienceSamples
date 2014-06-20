@@ -93,7 +93,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 			ip.invokeBuilder();
 		}
 		
-		// If a single file app then don't add any libraies, css or js files.
+		// If a single file app then don't add any libraries, css or js files.
 		if(!SharedConstants.ADDLIBRARIES.equals(singleFileAPP)){
 			// Add each library by importing a page then inserting it
 			if (libraries != null) {

@@ -4,7 +4,7 @@
   <GenHandlerClassName>com.bowstreet.builders.webapp.foundation.WebAppGenHandler</GenHandlerClassName> 
   <HelpFile /> 
   <RequiredFactoryVersion>7.0.1</RequiredFactoryVersion> 
-  <Description>This wizard builds a model using the Script Application builder to allow you to create a portlet or application that uses your selected scripting library.</Description> 
+  <Description>This wizard builds a model using the Script Application builder to allow you to create a portlet or application that uses your selected scripting library.  Or you can use this to references an existing single page application and turn it into a portlet or add rest services to it.</Description> 
   <Domains> 
 	 <Domain>WebApp_Wizard</Domain> 
   </Domains> 
@@ -22,7 +22,7 @@
       <UseAssociatedCoordinator>true</UseAssociatedCoordinator>    
     </InputDefinition> 
     <InputDefinition name="PortletAdapter_BuilderCallEnabled" base="com.bowstreet.core.Base.BooleanData">
-        <Page>Basics</Page>
+       	<Page>Basics</Page>
         <Prompt>Deploy this model as a portlet</Prompt>     
     </InputDefinition> 
     <InputDefinition name="PortletTitle" base="com.bowstreet.adapters.builders.PortletAdapterBuilder.PortletTitle">
@@ -42,7 +42,7 @@
         <HelpText></HelpText>
         <Visible>true</Visible>
         <Editor>
-            <Argument name="label">Script library files are used to identify the JS/CSS files used for a particular library.  These libraries are HTML files in the folder /samples/script_builder/libraries/.   Libraries with a suffix "cdn" are loaded from hosted web servers; for other libraries you will need to provide the required files.  To add a new library, add an HTML file in that folder with references to the desired JS/CSS files.</Argument>
+            <Argument name="label">Script library files are used to identify the JS/CSS files used for a particular library.  These libraries are HTML files in the folder /samples/script_builder/libraries/.  To add a new library, add an HTML file in that folder with references to the desired JS/CSS files.</Argument>
             <Argument name="foreground">blue</Argument>
         </Editor>
       <Page>Library</Page>
@@ -77,6 +77,41 @@
 	  <InitialValue>AddLibraries</InitialValue>
        <Page>Basics</Page>
     </InputDefinition> 
+    <InputDefinition name="ImportFromZip" base="com.bowstreet.core.Base.StringData"> 
+      <Page>Library</Page>
+      <Prompt>Application Location</Prompt> 
+      <InitialValue>UseFile</InitialValue> 
+      <HelpText>You can select a file that is already in the project or unzip a zipped application</HelpText>
+      <Required>false</Required> 
+      <Visible>false</Visible> 
+      <ProfileType>Value</ProfileType> 
+      <Callable>true</Callable> 
+      <Editor JavaClass="com.bowstreet.widget.RadioBox"> 
+        <Argument name="ListData" inheritable="true">UseFile,UseZip</Argument> 
+        <Argument name="ListLabels" inheritable="true">Use existing file, Get application from zip</Argument> 
+      </Editor> 
+    </InputDefinition> 
+   <InputDefinition name="ZipFile" base="com.bowstreet.core.Base.ServableContent"> 
+      <Prompt>Application Zip</Prompt> 
+      <InitialValue /> 
+      <HelpText>Zip file that contains the Application</HelpText> 
+      <Page>Library</Page>
+      <Required>true</Required> 
+      <Visible>false</Visible> 
+      <ProfileType>Value</ProfileType> 
+            <Editor>
+                <Argument name="fileSelectionMode" inheritable="true">File</Argument>
+                <Argument name="filterExtensions" inheritable="true">*.zip</Argument>
+             </Editor>
+    </InputDefinition>
+     <InputDefinition name="DeleteZip" base="com.bowstreet.core.Base.BooleanData">
+      <Page>Library</Page>
+      <Prompt>Delete zip when done</Prompt>
+      <Required>false</Required>
+      <Callable>true</Callable>
+      <Visible>false</Visible>
+      <HelpText>If checked, the wizard will remove the zip file from the project after unzipping it.</HelpText>
+     </InputDefinition>
      <InputDefinition name="HtmlFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.HtmlFile"> 
 	  <UseAssociatedCoordinator>false</UseAssociatedCoordinator>
       <Visible>false</Visible>

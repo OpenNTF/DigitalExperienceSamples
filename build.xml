@@ -58,6 +58,7 @@ Build file for creating Zip Archive
         <include name="WEB-INF/builders/com/ibm/wef/samples/wizards/**"/>
         <include name="WEB-INF/work/source/com/ibm/wef/samples/builders/Script*.*"/>
         <include name="WEB-INF/work/source/com/ibm/wef/samples/wizards/Script*.*"/>
+        <include name="WEB-INF/work/source/com/ibm/wef/samples/ZipUtil.java"/>
       </zipfileset>
     </zip>
 

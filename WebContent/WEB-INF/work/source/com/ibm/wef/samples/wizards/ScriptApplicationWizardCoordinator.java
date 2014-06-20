@@ -29,6 +29,7 @@ import com.bowstreet.BSConfig;
 import com.bowstreet.editor.uitools.coordinator.WebAppBaseCoordinator;
 import com.bowstreet.generation.DynamicBuilderInputDefinition;
 import com.bowstreet.util.StringUtil;
+import com.ibm.wef.samples.ZipUtil;
 import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
 
 /**
@@ -37,6 +38,8 @@ import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
 public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		implements FilenameFilter {
 
+	private static final String USE_FILE = "UseFile";   //$NON-NLS-1$
+	private static final String INDEX_HTML = "index.html";  //$NON-NLS-1$
 	private static final String SAMPLES_SCRIPTING_WIZARD_PAGES = "/samples/script_builder/wizard_templates"; //$NON-NLS-1$
 	private static final String SAMPLES_SCRIPTING = "/samples/apps/"; //$NON-NLS-1$
 	private static final String EMPTY = ""; //$NON-NLS-1$
@@ -74,7 +77,13 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 				.findInputDefinition(Constants.AddServiceProviderSupport);
 		defs.serviceProvider = context
 				.findInputDefinition(Constants.ServiceProvider);
-		defs.portletAdapter_BuilderCallEnabled.setBoolean(false);
+		defs.importFromZip = context
+				.findInputDefinition(Constants.ImportFromZip);
+		defs.zipFile = context
+				.findInputDefinition(Constants.ZipFile);
+		defs.deleteZip = context
+				.findInputDefinition(Constants.DeleteZip);
+		defs.portletAdapter_BuilderCallEnabled.setBoolean(true);
 		defs.singleFileAPP.setString(SharedConstants.ADDLIBRARIES);
 		initPickers();
 		defs.htmlChoices.setString(TEMPLATE_DEFAULT);
@@ -109,8 +118,18 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		} else if (changed == defs.singleFileAPP) {
 			showLibrayRelatedFields();
 			return true;
+		} else if (changed == defs.importFromZip) {
+			showZipRelatedFields();
+			return true;
 		}
 		return false;
+	}
+
+	private void showZipRelatedFields() {
+		boolean importFromZip = !USE_FILE.equals(defs.importFromZip.getString());
+		defs.deleteZip.setVisible(importFromZip);
+		defs.zipFile.setVisible(importFromZip);
+		defs.htmlFile.setVisible(!importFromZip);
 	}
 
 	private void showLibrayRelatedFields() {
@@ -118,8 +137,12 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		defs.dispLibraryInstruction.setVisible(addLibraries);
 		defs.libraries.setVisible(addLibraries);
 		defs.htmlChoices.setVisible(addLibraries);
-		defs.htmlFile.setVisible(!addLibraries);
 		defs.includeLibrariesOption.setVisible(addLibraries);
+		defs.htmlFile.setVisible(!addLibraries);
+		defs.importFromZip.setVisible(!addLibraries);
+		defs.importFromZip.setString(USE_FILE);
+		defs.zipFile.setVisible(false);
+		defs.deleteZip.setVisible(false);
 	}
 
 	private boolean checkFolder(String name) {
@@ -131,23 +154,46 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 	}
 
 	public void terminate() {
-		super.terminate();
+		String fileName = defs.zipFile.getString();
+		String name = defs.name.getString();
 		if(SharedConstants.ADDLIBRARIES.equals(defs.singleFileAPP.getString())){
 			String htmlChoice = defs.htmlChoices.getString();
-			String name = defs.name.getString();
 			String htmlFile = getNewFile(htmlChoices.get(htmlChoice), name, tHtml);
 			defs.htmlFile.setString(htmlFile);
 			if (htmlFile != null) {
 				String cssFile = getNewFile(cssChoices.get(htmlChoice), name, tCss);
 				defs.cssFile.setString(cssFile);
-	
+		
 				String scriptFile = getNewFile(scriptChoices.get(htmlChoice), name,
 						tJs);
 				defs.scriptFile.setString(scriptFile);
 			}
 		}
+		if(!StringUtil.isEmpty(fileName)){
+			defs.htmlFile.setString(unzipFile(fileName, name, defs.deleteZip.getBoolean()));
+		}
 	}
-
+	
+	private String unzipFile(String fileName, String name, boolean bRemove) {
+		String sourceFile = BSConfig.getHtmlRootDir()
+				+ fileName;
+		File zipFile = new File(sourceFile);
+		String destFileDir = BSConfig.getHtmlRootDir() + SAMPLES_SCRIPTING;
+		String rVal =  SAMPLES_SCRIPTING + name +'/';
+		File appsFolder = new File(destFileDir);
+		appsFolder.mkdir();
+		destFileDir+= name;
+		File destFolder = new File(destFileDir);
+		try {
+			rVal += ZipUtil.unzipFile(zipFile, destFolder, INDEX_HTML); //$NON-NLS-1$
+			// remove the imported file
+			if(bRemove)
+				ZipUtil.remove(zipFile);
+		} catch (IOException e) {
+		}
+		return rVal;
+	}
+	
 	private String getNewFile(String fileName, String name, int type) {
 		String sourceFileDir = BSConfig.getHtmlRootDir()
 				+ SAMPLES_SCRIPTING_WIZARD_PAGES + '/';
@@ -179,7 +225,7 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 			File srcFile = new File(sourceFileDir + fileName);
 			if (type == tHtml)
 				// html page is always index.html so set dest to index.html
-				fileName = "index.html"; //$NON-NLS-1$
+				fileName = INDEX_HTML; 
 			else{
 				if(fileName.startsWith("base-script-app")){
 					if(type == tCss)
@@ -238,6 +284,9 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		DynamicBuilderInputDefinition addServiceProviderSupport;
 		DynamicBuilderInputDefinition serviceProvider;
 		DynamicBuilderInputDefinition singleFileAPP;
+		DynamicBuilderInputDefinition importFromZip;
+		DynamicBuilderInputDefinition zipFile;
+		DynamicBuilderInputDefinition deleteZip;
 	}
 
 	static public interface Constants {
@@ -254,9 +303,9 @@ public class ScriptApplicationWizardCoordinator extends WebAppBaseCoordinator
 		public static final String CssFile = "CssFile"; //$NON-NLS-1$
 		public static final String AddServiceProviderSupport = "AddServiceProviderSupport"; //$NON-NLS-1$
 		public static final String ServiceProvider = "ServiceProvider"; //$NON-NLS-1$
-
-		// Names of some pages
-		public static final String PortletInfoPage = "PortletInfo"; //$NON-NLS-1$
+		public static final String ImportFromZip = "ImportFromZip"; //$NON-NLS-1$
+		public static final String ZipFile = "ZipFile"; //$NON-NLS-1$
+		public static final String DeleteZip = "DeleteZip"; //$NON-NLS-1$
 	}
 
 	/*

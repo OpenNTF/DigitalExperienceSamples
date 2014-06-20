@@ -74,7 +74,6 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 		defs.serviceProvider.setVisible(addProviderSupport);
 		boolean addLibraries = SharedConstants.ADDLIBRARIES.equals(defs.singleFileAPP.getString());
 		defs.libraries.setVisible(addLibraries);
-		defs.pageName.setVisible(addLibraries);
 		defs.scriptFile.setVisible(addLibraries);
 		defs.cssFile.setVisible(addLibraries);
 		defs.includeLibrariesOption.setVisible(addLibraries);
