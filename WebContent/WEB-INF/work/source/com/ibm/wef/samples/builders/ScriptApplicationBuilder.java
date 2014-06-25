@@ -94,7 +94,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		}
 		
 		// If a single file app then don't add any libraries, css or js files.
-		if(!SharedConstants.ADDLIBRARIES.equals(singleFileAPP)){
+		if(!SharedConstants.SINGLEFILEAPP.equals(singleFileAPP)){
 			// Add each library by importing a page then inserting it
 			if (libraries != null) {
 				for (@SuppressWarnings("rawtypes")  //$NON-NLS-1$
@@ -292,6 +292,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		public static final String HTML_HEAD = "HTML/HEAD"; //$NON-NLS-1$
 		public static final String IS_RUNNING_STANDALONE_METHOD = "isRunningStandalone"; //$NON-NLS-1$
 		public static final String ADDLIBRARIES = "AddLibraries"; //$NON-NLS-1$
+		public static final String SINGLEFILEAPP = "SingleFileApp"; //$NON-NLS-1$
 		public static final String INCLUDE_ALWAYS_OPTION = "IncludeAlways"; //$NON-NLS-1$
 		public static final String SCRIPT_BUILDER_LIBRARIES_FOLDER = "/samples/script_builder/libraries/"; //$NON-NLS-1$
 		public static final String HEAD = "HEAD"; //$NON-NLS-1$
