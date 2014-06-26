@@ -78,8 +78,12 @@ public class ZipUtil {
 					if (dir != null) {
 						makeDirs(destination, dir);
 					}
-					if(name.toLowerCase().endsWith("index.html"))
+					if(rVal == null && name.toLowerCase().endsWith("index.html")){
+						int len = name.length();
+						// make sure it is just index.html nor .findex.html 
+						if(len == 10 || (len > 10) && name.substring(len-11).startsWith("/"))
 						rVal  = name;
+					}
 					extractFile(zip, destination, name);
 				}
 			} finally {
