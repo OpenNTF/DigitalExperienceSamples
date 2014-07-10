@@ -33,7 +33,7 @@ import com.bowstreet.webapp.DataService;
 import com.bowstreet.webapp.Page;
 import com.bowstreet.webapp.WebApp;
 import com.bowstreet.webapp.WebAppObject;
-import com.ibm.wef.samples.builders.ScriptApplicationBuilder.*;
+import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
 /**
  * builder regen class for script library  builder
  */
@@ -56,7 +56,7 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 			genContext.deferBuilderCall(GenContext.PHASE_POSTCONSTRUCTION,
 					builderCall);
 		} else {
-			String script = null;
+			String dataService = null;
 
 			/* ##GENERATED_BODY_BEGIN#InputAccessorCode# */
 			// Generated code to get all the builder inputs
@@ -97,30 +97,35 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 			// variables for the URLs
 			if (addServiceProviderSupport
 					&& !StringUtil.isEmpty(serviceProvider)) {
-				String dataServiceName = "sc"; //$NON-NLS-1$
+				String dataServiceName = com.ibm.wef.samples.builders.ScriptApplicationBuilder.DEFAULT_SERVICE_NAME;
 				ServiceConsumer2 sc = new ServiceConsumer2(builderCall,
 						genContext);
 				sc.setName(dataServiceName);
 				sc.setProviderModel(serviceProvider);
 				sc.setUseAllOperations(true);
 				sc.invokeBuilder();
-
-				RestServiceEnable rse = new RestServiceEnable(builderCall,
-						genContext);
-				rse.setDataServiceName(dataServiceName);
-				rse.setServiceExecutionMode(RestServiceEnable.BuilderStaticValues.SEMVAL_LocalCall);
-				rse.setResultType(RestServiceEnable.BuilderStaticValues.RTVAL_JSON);
-				rse.invokeBuilder();
-
-				DataService ds = webApp.getDataService(dataServiceName);
-				if(ds != null)
-					script = com.ibm.wef.samples.builders.ScriptApplicationBuilder.getScript(serviceVarName, ds);
+				dataService = dataServiceName;
 			}
 			if (!allPages && pages == null) {
 				builderCall.addMessage(BuilderCall.SEVERITY_ERROR, "no Pages"); //$NON-NLS-1$
 				return;
 			}
 
+			if (dataService != null) {
+				addRestDataServiceToPage(genContext, webApp, builderCall, dataService);
+			}
+			IXml extraServices = builderInputs.getXml(Constants.ExtraServices, null);
+			if (extraServices != null) {
+				for (@SuppressWarnings("rawtypes")  //$NON-NLS-1$
+				Iterator iterator = extraServices.getChildren().iterator(); iterator.hasNext();) {
+					IXml dataServiceEntry = (IXml) iterator.next();
+					String serviceName = dataServiceEntry.getText("DataService");  //$NON-NLS-1$
+					serviceVarName = dataServiceEntry.getText("VariableName");  //$NON-NLS-1$
+					if (serviceName != null && serviceVarName != null) {
+						addRestDataServiceToPage(genContext, webApp, builderCall, serviceName);
+					}
+				}
+			}
 			Set<Page> inclPages = getPagesToProcess(webApp, allPages, pages);
 
 			for (Page page : inclPages) {
@@ -173,15 +178,19 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 					ss.setSourceType(StyleSheet.BuilderStaticValues.STVAL_Link);
 					ss.invokeBuilder();
 				}
-				if (script != null) {
-					ClientJavaScript cjs = new ClientJavaScript(builderCall,
-							genContext);
-					cjs.setPageName(pageName);
-					cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Implicit);
-					cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Explicit);
-					// System.out.println("script: " + script);
-					cjs.setScript(script);
-					cjs.invokeBuilder();
+				if (dataService != null) {
+					addScriptToPage(genContext, webApp, builderCall, pageName,
+							serviceVarName, dataService);
+				}
+				if (extraServices != null) {
+					for (@SuppressWarnings("rawtypes")  //$NON-NLS-1$
+					Iterator iterator = extraServices.getChildren().iterator(); iterator.hasNext();) {
+						IXml dataServiceEntry = (IXml) iterator.next();
+						String serviceName = dataServiceEntry.getText("DataService");  //$NON-NLS-1$
+						serviceVarName = dataServiceEntry.getText("VariableName");  //$NON-NLS-1$
+						addScriptToPage(genContext, webApp, builderCall, pageName,
+									serviceVarName, serviceName);
+					}
 				}
 			}
 			// If conditionally adding JS links, add a method to test for
@@ -192,6 +201,45 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 
 			}
 		}
+	}
+
+	private void addRestDataServiceToPage(GenContext genContext, WebApp webApp,
+			BuilderCall builderCall, String serviceName) {
+		if(!StringUtil.isEmpty(serviceName)){
+			RestServiceEnable rse = new RestServiceEnable(builderCall,
+					genContext);
+			rse.setDataServiceName(serviceName);
+			rse.setServiceExecutionMode(RestServiceEnable.BuilderStaticValues.SEMVAL_LocalCall);
+			rse.setResultType(RestServiceEnable.BuilderStaticValues.RTVAL_JSON);
+			rse.invokeBuilder();
+		}		
+	}
+
+	private void addScriptToPage(GenContext genContext, WebApp webApp,
+			BuilderCall builderCall, String pageName, String serviceVarName,
+			String serviceName) {
+		if(!StringUtil.isEmpty(serviceVarName)){
+			if(!StringUtil.isEmpty(serviceName)){
+			DataService ds = webApp.getDataService(serviceName);
+			if(ds != null){
+				String script = com.ibm.wef.samples.builders.ScriptApplicationBuilder.getScript(serviceVarName, ds);
+				ClientJavaScript cjs = new ClientJavaScript(builderCall,
+						genContext);
+				cjs.setPageName(pageName);
+				cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Implicit);
+				cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Explicit);
+				// System.out.println("script: " + script);
+				cjs.setScript(script);
+				cjs.invokeBuilder();
+			}
+			else
+				builderCall.addMessage(BuilderCall.SEVERITY_ERROR,  serviceName + " Data service not found");  //$NON-NLS-1$
+		}
+		else
+			builderCall.addMessage(BuilderCall.SEVERITY_WARNING,  " No data service name");  //$NON-NLS-1$
+	}
+	else
+		builderCall.addMessage(BuilderCall.SEVERITY_WARNING,  " No service variable name");  //$NON-NLS-1$
 	}
 
 	private Set<Page> getPagesToProcess(WebApp webApp, boolean allPages,
@@ -285,6 +333,7 @@ public class ScriptLibraryBuilder extends BaseWebAppControlBuilder implements
 		public static final String PageName = "PageName"; //$NON-NLS-1$
 		public static final String ServiceVarName = "ServiceVarName"; //$NON-NLS-1$
 		public static final String IncludeLibrariesOption = "IncludeLibrariesOption"; //$NON-NLS-1$
+		public static final String ExtraServices = "ExtraServices"; ////$NON-NLS-1$
 		/* ##GENERATED_END */
 
 	}

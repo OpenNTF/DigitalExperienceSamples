@@ -112,6 +112,52 @@
       <Visible>false</Visible>
       <HelpText>If checked, the wizard will remove the zip file from the project after unzipping it.</HelpText>
      </InputDefinition>
+   <InputDefinition name="Templating" base="com.bowstreet.core.Base.BooleanData">
+       	<Page>Library</Page>
+        <Prompt>Convert any templating</Prompt>     
+      <Required>false</Required>
+      <Callable>true</Callable>
+      <Visible>false</Visible>
+      <HelpText>If checked, the wizard will look through any HTML files for js templating and convert to the specified templating.</HelpText>
+    </InputDefinition> 
+   <InputDefinition name="ScriptToReplace" base="com.bowstreet.core.Base.StringData"> 
+      <Prompt>Template script to replace</Prompt> 
+      <Group>Libraries</Group>
+      <InitialValue>underscore.js</InitialValue> 
+      <HelpText>This is the name of the file that provides templating support.</HelpText> 
+      <Page>Library</Page>
+      <Required>false</Required> 
+      <Visible>false</Visible> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+    <InputDefinition name="TemplateFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ScriptFile"> 
+	  <UseAssociatedCoordinator>false</UseAssociatedCoordinator>
+      <InitialValue>/samples/script_builder/wizard_templates/underscore.js</InitialValue> 
+      <Visible>false</Visible>
+      <Page>Library</Page>
+      <Prompt>New template script file</Prompt>
+      <HelpText>This file will replace the scripting template js file.</HelpText>
+    </InputDefinition> 
+   <InputDefinition name="OldTemplating" base="com.bowstreet.core.Base.StringData"> 
+      <Prompt>Original templating strings</Prompt> 
+      <Group>Libraries</Group>
+      <InitialValue>%>,<%=,<%-,<%</InitialValue> 
+      <HelpText>This is a comma separated list of the templating strings.</HelpText> 
+      <Page>Library</Page>
+      <Required>false</Required> 
+      <Visible>false</Visible> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
+   <InputDefinition name="NewTemplating" base="com.bowstreet.core.Base.StringData"> 
+      <Prompt>New templating strings</Prompt> 
+      <Group>Libraries</Group>
+      <InitialValue>}},{{=,{{-,{{</InitialValue> 
+      <HelpText>This is a comma separated list of the templating strings.</HelpText> 
+      <Page>Library</Page>
+      <Required>false</Required> 
+      <Visible>false</Visible> 
+      <Callable>true</Callable> 
+    </InputDefinition> 
      <InputDefinition name="HtmlFile" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.HtmlFile"> 
 	  <UseAssociatedCoordinator>false</UseAssociatedCoordinator>
       <Visible>false</Visible>

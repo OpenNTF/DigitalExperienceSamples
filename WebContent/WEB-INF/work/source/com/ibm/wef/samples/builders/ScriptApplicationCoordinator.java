@@ -12,6 +12,7 @@ package com.ibm.wef.samples.builders;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import com.bowstreet.editor.uitools.coordinator.WebAppBaseCoordinator;
 import com.bowstreet.generation.DynamicBuilderInputDefinition;
 import com.bowstreet.util.IXml;
 import com.bowstreet.util.StringUtil;
+import com.bowstreet.webapp.DataService;
 import com.ibm.wef.samples.builders.ScriptApplicationBuilder.Constants;
 import com.ibm.wef.samples.builders.ScriptApplicationBuilder.SharedConstants;
 
@@ -49,6 +51,7 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 		defs.addServiceProviderSupport = context.findInputDefinition(Constants.AddServiceProviderSupport);
 		defs.serviceProvider = context.findInputDefinition(Constants.ServiceProvider);
 		defs.serviceVarName = context.findInputDefinition(Constants.ServiceVarName);
+		defs.extraServices = context.findInputDefinition(Constants.ExtraServices);
 		String singleFileApp = defs.singleFileAPP.getString();
 		if(StringUtil.isEmpty(singleFileApp))
 			defs.singleFileAPP.setString((String)defs.singleFileAPP.getInitialValue());
@@ -121,6 +124,17 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 
 		// System.out.println("fieldChoices: " + fieldChoices);
 		updateCellEditor(defs.libraries, 0, "ListData", StringUtil.buildDelimitedString(libChoices, ','));
+		
+	       // Populate the service picker.
+        List<String> serviceNames = new ArrayList<String>();
+        for (Iterator<DataService> services = getWebApp().getDataServices(); services.hasNext();)
+        {
+            DataService service = services.next();
+            String sName = service.getName();
+            if(!ScriptApplicationBuilder.DEFAULT_SERVICE_NAME.equals(sName))
+            	serviceNames.add(sName);
+        }       
+ 		updateCellEditor(defs.extraServices, 0, "ListData", StringUtil.buildDelimitedString(serviceNames, ','));
 	}
 
 	/**
@@ -196,6 +210,7 @@ public class ScriptApplicationCoordinator extends WebAppBaseCoordinator implemen
 		DynamicBuilderInputDefinition serviceVarName;
 		DynamicBuilderInputDefinition disableSmartRefresh;
 		DynamicBuilderInputDefinition defaultRDD;
+		DynamicBuilderInputDefinition extraServices;
 		/* ##GENERATED_END */
 
 	}

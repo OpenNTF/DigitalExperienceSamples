@@ -59,10 +59,9 @@ public class ZipUtil {
 		return s == -1 ? null : name.substring(0, s);
 	}
 
-	public static String unzipFile(File zipFile, File destination, String startHtml) throws IOException {
+	public static void unzipFile(File zipFile, File destination) throws IOException {
 		remove(destination);
 		destination.mkdirs();
-		String rVal = null;
 		try {
 			ZipInputStream zip = new ZipInputStream(new FileInputStream(zipFile));
 			try {
@@ -78,12 +77,6 @@ public class ZipUtil {
 					if (dir != null) {
 						makeDirs(destination, dir);
 					}
-					if(rVal == null && name.toLowerCase().endsWith("index.html")){
-						int len = name.length();
-						// make sure it is just index.html nor .findex.html 
-						if(len == 10 || (len > 10) && name.substring(len-11).startsWith("/"))
-						rVal  = name;
-					}
 					extractFile(zip, destination, name);
 				}
 			} finally {
@@ -92,7 +85,6 @@ public class ZipUtil {
 		} catch (FileNotFoundException fnfe) {
 			throw new WrappedException(fnfe, "Not a valid zip"); //$NON-NLS-1$
 		}
-		return rVal;
 	}
 
 }

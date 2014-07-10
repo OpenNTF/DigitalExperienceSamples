@@ -65,6 +65,9 @@
     <InputDefinition name="ServiceVarName" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ServiceVarName"> 
 	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
     </InputDefinition> 
+  	<InputDefinition name="ExtraServices"  base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ExtraServices"> 
+	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
+    </InputDefinition>  
     <InputDefinition name="DisableSmartRefresh" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.DisableSmartRefresh"> 
 	  <UseAssociatedCoordinator>true</UseAssociatedCoordinator>
     </InputDefinition>
@@ -85,7 +88,10 @@
     <GroupDefinition id="ProviderSupport" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.ProviderSupport">
             <Description>Select a Data Service provider model if you want to call a Data Service from your JS code.   If enabled, a JS variable that has members for the URLs to each of those service operations will be added to the pages.</Description>
     </GroupDefinition> 
-    <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
+     <GroupDefinition id="DataServices" base="com.ibm.wef.samples.builders.ScriptApplicationBuilder.DataServices">
+            <Description>Select a Data Service if you want to call a Data Service from your JS code.   If added, a JS variable that has members for the URLs to each of those service operations will be added to the pages.</Description>
+    </GroupDefinition> 
+   <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
   </GroupDefinitions> 
   <PageDefinitions /> 
 </BuilderDef> 

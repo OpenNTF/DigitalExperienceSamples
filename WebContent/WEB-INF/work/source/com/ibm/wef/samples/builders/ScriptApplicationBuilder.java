@@ -39,6 +39,7 @@ import com.bowstreet.webapp.WebAppObject;
  */
 public class ScriptApplicationBuilder implements WebAppBuilder {
 	
+	public static final String DEFAULT_SERVICE_NAME = "sc";
 	protected static final String FALSE = "false"; //$NON-NLS-1$
 
 
@@ -133,7 +134,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		// add ServiceConsumer if specified, REST enable it, and create JS
 		// variables for the URLs
 		if (addServiceProviderSupport && !StringUtil.isEmpty(serviceProvider)) {
-			String dataServiceName = webApp.generateUniqueName("sc");  //$NON-NLS-1$
+			String dataServiceName = webApp.generateUniqueName(DEFAULT_SERVICE_NAME);  //$NON-NLS-1$
 			if (webApp.getDataService(dataServiceName) == null) {
 				ServiceConsumer2 sc = new ServiceConsumer2(builderCall, genContext);
 				sc.setName(dataServiceName);
@@ -141,29 +142,55 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 				sc.setUseAllOperations(true);
 				sc.invokeBuilder();
 			}
-			DataService ds = webApp.getDataService(dataServiceName);
-			
-			if(ds != null){
-				// If RestServiceEnable methods aren't already present, call RestServiceEnable builder
-				ServiceOperation op = ds.getOperations().next();
-				if (op != null && (webApp.getMethod(op.getName() + "GenerateRestUrl")) == null) {  //$NON-NLS-1$
-					RestServiceEnable rse = new RestServiceEnable(builderCall, genContext);
-					rse.setDataServiceName(dataServiceName);
-					rse.setServiceExecutionMode(RestServiceEnable.BuilderStaticValues.SEMVAL_LocalCall);
-					rse.setResultType(RestServiceEnable.BuilderStaticValues.RTVAL_JSON);
-					rse.invokeBuilder();
+			addRestDataServiceToPage(genContext, webApp, builderCall, pageName,
+					serviceVarName, dataServiceName);
+		}
+		IXml extraServices = builderInputs.getXml(Constants.ExtraServices, null);
+		if (extraServices != null) {
+			for (@SuppressWarnings("rawtypes")  //$NON-NLS-1$
+			Iterator iterator = extraServices.getChildren().iterator(); iterator.hasNext();) {
+				IXml dataServiceEntry = (IXml) iterator.next();
+				String serviceName = dataServiceEntry.getText("DataService");  //$NON-NLS-1$
+				serviceVarName = dataServiceEntry.getText("VariableName");  //$NON-NLS-1$
+				addRestDataServiceToPage(genContext, webApp, builderCall, pageName,
+							serviceVarName, serviceName);
+			}
+		}
+		
+	}
+
+	private void addRestDataServiceToPage(GenContext genContext, WebApp webApp,
+			BuilderCall builderCall, String pageName, String serviceVarName,
+			String dataServiceName) {
+		if(!StringUtil.isEmpty(serviceVarName)){
+			if(!StringUtil.isEmpty(dataServiceName)){
+				DataService ds = webApp.getDataService(dataServiceName);
+				if(ds != null){
+					// If RestServiceEnable methods aren't already present, call RestServiceEnable builder
+					ServiceOperation op = ds.getOperations().next();
+					if (op != null && (webApp.getMethod(op.getName() + "GenerateRestUrl")) == null) {  //$NON-NLS-1$
+						RestServiceEnable rse = new RestServiceEnable(builderCall, genContext);
+						rse.setDataServiceName(dataServiceName);
+						rse.setServiceExecutionMode(RestServiceEnable.BuilderStaticValues.SEMVAL_LocalCall);
+						rse.setResultType(RestServiceEnable.BuilderStaticValues.RTVAL_JSON);
+						rse.invokeBuilder();
+					}
+					String script = getScript(serviceVarName, ds);
+					ClientJavaScript cjs = new ClientJavaScript(builderCall, genContext);
+					cjs.setPageName(pageName);
+					cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Implicit);
+					cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Explicit);
+					cjs.setScript(script);
+					cjs.invokeBuilder();
 				}
-				String script = getScript(serviceVarName, ds);
-				ClientJavaScript cjs = new ClientJavaScript(builderCall, genContext);
-				cjs.setPageName(pageName);
-				cjs.setPageLocationType(ClientJavaScript.BuilderStaticValues.PLTVAL_Implicit);
-				cjs.setScriptSourceType(ClientJavaScript.BuilderStaticValues.SSTVAL_Explicit);
-				cjs.setScript(script);
-				cjs.invokeBuilder();
+				else
+					builderCall.addMessage(BuilderCall.SEVERITY_ERROR,  dataServiceName + " Data service not found");  //$NON-NLS-1$
 			}
 			else
-				builderCall.addMessage(BuilderCall.SEVERITY_ERROR, "Data service not found");  //$NON-NLS-1$
+				builderCall.addMessage(BuilderCall.SEVERITY_WARNING,  " No data service name");  //$NON-NLS-1$
 		}
+		else
+			builderCall.addMessage(BuilderCall.SEVERITY_WARNING,  " No service variable name");  //$NON-NLS-1$
 	}
 
 	protected static String getScript(String serviceVarName, DataService ds) {
@@ -286,6 +313,7 @@ public class ScriptApplicationBuilder implements WebAppBuilder {
 		public static final String IncludeLibrariesOption = "IncludeLibrariesOption";  //$NON-NLS-1$
 		public static final String DisableSmartRefresh = "DisableSmartRefresh"; //$NON-NLS-1$
 		public static final String DefaultRDD = "DefaultRDD"; //$NON-NLS-1$
+		public static final String ExtraServices = "ExtraServices"; //$NON-NLS-1$
 		/* ##GENERATED_END */
 	}
 	static public interface SharedConstants {

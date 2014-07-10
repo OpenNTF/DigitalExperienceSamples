@@ -150,12 +150,47 @@
       <InitialValue>serviceRestUrls</InitialValue> 
       <HelpText>Specify the name of the JS variable that has URLs for all the service operations.</HelpText> 
       <Page /> 
-      <Required>false</Required> 
+       <Editor>
+            <Argument name="filter">**ObjectName</Argument>
+        </Editor>
+       <Required>false</Required> 
       <Visible>true</Visible> 
       <ProfileType>Value</ProfileType> 
       <Callable>true</Callable> 
     </InputDefinition> 
-   <InputDefinition name="DisableSmartRefresh" base="com.bowstreet.core.Base.BooleanData"> 
+    <InputDefinition name="ExtraServices" > 
+       <Group>DataServices</Group>
+     <Required>false</Required> 
+      <Visible>true</Visible> 
+      <Type>Xml</Type>
+      <Property>true</Property>
+      <ProfileType>XmlElements</ProfileType> 
+      <Callable>true</Callable> 
+
+      <Editor JavaClass="com.bowstreet.editor.uitools.widgets.ListWidget" inheritable="true"> 
+         <Argument name="name" inheritable="true">data</Argument>
+         <Argument name="columns" inheritable="true">2</Argument> 
+         <Argument name="headings" inheritable="true">Data Service,JS Variable Name for Service URLs</Argument> 
+         <Argument name="columnTags" inheritable="true">DataService,VariableName</Argument> 
+         <Argument name="rowtag" inheritable="true">ServiceInfo</Argument> 
+         <Argument name="offerRightClickMenu" inheritable="true">true</Argument>
+         <Argument name="allowAdd" inheritable="true">true</Argument>
+         <Argument name="allowReorder" inheritable="true">false</Argument>
+         <Argument name="cellEditors" inheritable="true"> 
+           <Editors> 
+              <Editor JavaClass="com.bowstreet.widget.ComboBox">
+                 <Argument name="ListData"></Argument>
+                 <Argument name="ListLabels"></Argument>
+                 <Argument name="isEditable">false</Argument>
+               </Editor>
+               <Editor JavaClass="com.bowstreet.widget.TextField">
+	            <Argument name="filter">**ObjectName</Argument>
+               </Editor>
+            </Editors> 
+         </Argument> 
+      </Editor> 
+    </InputDefinition> 
+     <InputDefinition name="DisableSmartRefresh" base="com.bowstreet.core.Base.BooleanData"> 
       <Prompt>Disable Smart Refresh</Prompt> 
       <Group>Advanced</Group>
       <InitialValue>true</InitialValue>
@@ -166,7 +201,7 @@
       <ProfileType>Value</ProfileType> 
       <Callable>true</Callable> 
     </InputDefinition> 
- 	<InputDefinition name="DefaultRDD" base="com.bowstreet.core.Base.ServableContent">
+	<InputDefinition name="DefaultRDD" base="com.bowstreet.core.Base.ServableContent">
       <Group>Advanced</Group>
         <Prompt>Default RDD File</Prompt>
         <HelpText>This is the RDD file that will automatically be applied to all PageAutomation pages.  Leave blank to use the current default.</HelpText>
@@ -175,7 +210,7 @@
             <Argument name="filterExtensions">*.xml</Argument>
         </Editor>
     </InputDefinition>
-  </InputDefinitions> 
+ </InputDefinitions> 
   <GroupDefinitions> 
     <GroupDefinition id="Advanced" base="com.bowstreet.core.Base.Advanced" /> 
     <GroupDefinition id="Libraries">
@@ -198,6 +233,13 @@
             <IsCollapsible>true</IsCollapsible>
       <InitiallyCollapsed>false</InitiallyCollapsed> 
             <Description>Select a Data Service provider model if you want to call a Data Service from your JS code.   If enabled, a JS variable will be generated in the page that has members for the URLs to each of those service operations.</Description>
+    </GroupDefinition> 
+    <GroupDefinition id="DataServices">
+            <Name>REST Data Service Support</Name>
+            <BorderStyle>Etched</BorderStyle>
+            <IsCollapsible>true</IsCollapsible>
+      <InitiallyCollapsed>false</InitiallyCollapsed> 
+            <Description>Select a Data Service if you want to call a Data Service from your JS code.   If added, a JS variable will be generated in the page that has members for the URLs to each of those service operations.</Description>
     </GroupDefinition> 
   </GroupDefinitions> 
   <PageDefinitions /> 
