@@ -5,3 +5,10 @@ This product includes software contributed to
 OpenNTF Alliance (http://www.OpenNTF.org/)
 
 This product is licensed under the terms of the Apache 2.0 license.
+
+The product includes code from the following third party packages:
+
+Underscore.js
+Licensed under MIT
+Copyright (c) 2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+Available from http://underscorejs.org/
