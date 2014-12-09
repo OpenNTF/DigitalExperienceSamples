@@ -1,0 +1,267 @@
+<Model id="samples/BankAccountService"><BuilderCallList><BuilderCall id="bc3"><BuilderDefID>com.bowstreet.builders.core.Comment</BuilderDefID>
+<Messages />
+<Inputs><Input name="Name">Next Steps</Input>
+<Input name="BuilderCallEnabled">true</Input>
+<Input name="Comment">This model illustrates a way to create a portlet that provides data for a Single Page Application Portlet.  You place this portlet on the same page as the Single Page Application Portlet and the variable that allows you to access the json based service is available on the page.  This sample only exposes a single service operation but it could easily be changed to expose all the service operations available within the model.</Input>
+<Input name="BuilderCallComment">This model illustrates a way to create a portlet that provides data for a Single Page Application Portlet.  You place this portlet on the same page as the Single Page Application Portlet and the variable that allows you to access the json based service is available on the page.  This sample only exposes a single service operation but it could easily be changed to expose all the service operations available within the model.</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc15"><BuilderDefID>com.bowstreet.adapters.builders.PortletAdapterBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="BuilderCallCategory">General</Input>
+<Input name="CustomEditPageType">None</Input>
+<Input name="CustomConfigurePageType">None</Input>
+<Input name="Name">BankAccounts</Input>
+<Input name="PortletTitle">Banking Script Portlet Service Provider</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc2"><BuilderDefID>com.bowstreet.builders.webapp.ServiceDefinitionBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="PublicService">true</Input>
+<Input name="ExportAsWSDL">false</Input>
+<Input name="WrappedDocLiteral">false</Input>
+<Input name="MaintainState">false</Input>
+<Input name="AddTestingSupport">false</Input>
+<Input name="TestCreateMain">false</Input>
+<Input name="TestIncludeDocumentation">false</Input>
+<Input name="TestOverrideInputs">false</Input>
+<Input name="LogicalOperations"><Functions><FunctionDef><LogicalName>Create</LogicalName>
+<OperationName />
+<KeyFieldRequired />
+<KeyFieldProduced />
+</FunctionDef>
+<FunctionDef><LogicalName>RetrieveList</LogicalName>
+<OperationName />
+<KeyFieldRequired />
+<KeyFieldProduced />
+</FunctionDef>
+<FunctionDef><LogicalName>Search</LogicalName>
+<OperationName />
+<KeyFieldRequired />
+<KeyFieldProduced />
+</FunctionDef>
+<FunctionDef><LogicalName>Update</LogicalName>
+<OperationName />
+<KeyFieldRequired />
+<KeyFieldProduced />
+</FunctionDef>
+<FunctionDef><LogicalName>Delete</LogicalName>
+<OperationName />
+<KeyFieldRequired />
+<KeyFieldProduced />
+</FunctionDef>
+<FunctionDef><LogicalName>RetrieveOne</LogicalName>
+<OperationName />
+<KeyFieldRequired />
+<KeyFieldProduced />
+</FunctionDef>
+</Functions>
+</Input>
+<Input name="ServiceName">bankaccountservice</Input>
+<Input name="Name">bankaccountservice</Input>
+<Input name="TestServiceName">bankaccountservice</Input>
+<Input name="TestOperationInputs"><OverridenInputs><InputsForOperation><Operation>getAccounts</Operation>
+<Inputs />
+</InputsForOperation>
+</OverridenInputs>
+</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc5"><BuilderDefID>com.ibm.samples.builders.XmlFileDataService</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="MakeServicePublic">false</Input>
+<Input name="AddTestingSupport">false</Input>
+<Input name="OperationNameSuffix">Row</Input>
+<Input name="CacheSchema">false</Input>
+<Input name="FileName">/WEB-INF/samples/scripting/banking_accounts_summary.xml</Input>
+<Input name="KeyField">accountNumber</Input>
+<Input name="Name">bankaccounts</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc8"><BuilderDefID>com.bowstreet.builders.webapp.ServiceOperationBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="InputStructureHandling">FromOperation</Input>
+<Input name="InputAllowStructureEdit">false</Input>
+<Input name="InputAutomaticMapping">true</Input>
+<Input name="ResultStructureHandling">FromOperation</Input>
+<Input name="ResultAllowStructureEdit">false</Input>
+<Input name="ResultAutomaticMapping">true</Input>
+<Input name="EnableCaching">false</Input>
+<Input name="CachingTimeout">3600</Input>
+<Input name="PreExecuteEventEnabled">disabled</Input>
+<Input name="PostExecuteEventEnabled">disabled</Input>
+<Input name="PagedDataResource">Default</Input>
+<Input name="DataService">bankaccountservice</Input>
+<Input name="ResultMappingTable"><Fields><Field><Name>accountName</Name>
+<Type>string</Type>
+</Field>
+<Field><Name>accountNumber</Name>
+<Type>string</Type>
+</Field>
+<Field><Name>accountDescription</Name>
+<Type>string</Type>
+</Field>
+<Field><Name>accountBalance</Name>
+<Type>string</Type>
+</Field>
+</Fields>
+</Input>
+<Input name="InputMappingTable"><Fields />
+</Input>
+<Input name="OperationName">getAccounts</Input>
+<Input name="TargetOperation">DataServices/bankaccounts/getRows</Input>
+<Input name="Name">getAccounts</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc10"><BuilderDefID>com.bowstreet.builders.webapp.RestServiceEnableBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="ResultType">JSON</Input>
+<Input name="EnableTesting">false</Input>
+<Input name="GenerateMain">true</Input>
+<Input name="ServiceExecutionMode">LocalCall</Input>
+<Input name="KeepSessionData">false</Input>
+<Input name="DataServiceName">bankaccountservice</Input>
+<Input name="Name">bankaccountservice</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc12"><BuilderDefID>com.bowstreet.builders.webapp.PageBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="PageType">EmptyPage</Input>
+<Input name="UseTheme">false</Input>
+<Input name="GenerateMain">false</Input>
+<Input name="CreateInitialClientAction">true</Input>
+<Input name="ApplicationPageType">SimplePage</Input>
+<Input name="PageURL">${Properties/bowstreet.Theme/ApplicationPage_ViewPageBase}</Input>
+<Input name="InputPageURL">${Properties/bowstreet.Theme/ApplicationPage_InputPageBase}</Input>
+<Input name="PageHeaderLocation">page_header_text</Input>
+<Input name="DataPageCreateTagsLocation">data</Input>
+<Input name="DataPageInputCreateTagsLocation">input_data</Input>
+<Input name="DataPageAddSubmitButton">false</Input>
+<Input name="DataPageSubmitButtonLocation">update_button</Input>
+<Input name="DataPageSubmitActionType">MODEL_FORM</Input>
+<Input name="DataPageAddCancelButton">false</Input>
+<Input name="DataPageCancelButtonLabel">Back</Input>
+<Input name="DataPageCancelButtonLocation">back_button</Input>
+<Input name="DataPageCancelActionType">MODEL_LINK</Input>
+<Input name="PageNavTemplateFile">/factory/data_layout_templates/mobile_navigation_list_template.html</Input>
+<Input name="PageNavNavigation"><top />
+</Input>
+<Input name="PageNavGroups"><top />
+</Input>
+<Input name="DataPageTemplateFile">${Properties/bowstreet.Theme/ApplicationPage_HTMLTemplate}</Input>
+<Input name="DataPageValidateFromSchema">Both</Input>
+<Input name="DataPageRequiredTextPrompt">*</Input>
+<Input name="DataPageGenerateLabels">true</Input>
+<Input name="DataPageInitializeInputs">OnModelLoad</Input>
+<Input name="DataPageSubmitButtonLabel">Next</Input>
+<Input name="Name">main</Input>
+<Input name="ApplicationPageData">&lt;HTML&gt;
+   
+   &lt;HEAD &gt;
+   &lt;style&gt;
+   .script_provider_view {
+display: none;
+}
+#wefBody .script_provider_view {
+display: block;
+}
+.edit-mode .script_provider_view {
+display: block;
+} 
+&lt;/style&gt;
+
+   &lt;/HEAD&gt;
+   &lt;BODY id="wefBody"&gt;
+ &lt;div class="script_provider_view"&gt; 
+  &lt;div name="vf_view_container" class="vf_view_container"&gt; 
+    &lt;h2 class="blockHeading" name="page_header_text"&gt;Service Provider: demo/banking/data/BankingService&lt;/h2&gt; 
+    &lt;div name="vf_header" class="vf_header"&gt;&lt;/div&gt; 
+    &lt;div class="vf_search_section"&gt; 
+    &lt;/div&gt; 
+    &lt;div name="vf_view_list" class="vf_view_list"&gt; 
+      
+&lt;form method="post" name="view_form"&gt; 
+        
+&lt;div name="data"&gt;&lt;span name="servicesNavigation"&gt;&lt;div class="fp80MobileNavE2E"&gt;  
+&lt;/div&gt;&lt;/span&gt;&lt;/div&gt; 
+        &lt;div class="paging"&gt;&lt;span name="paging_buttons"&gt;&lt;/span&gt;&lt;/div&gt; 
+        &lt;div name="vf_buttons" class="vf_buttons"&gt; 
+          &lt;span name="back_button"&gt;&lt;/span&gt; 
+          &lt;span name="update_button"&gt;&lt;/span&gt; 
+          &lt;span name="extra_button1"&gt;&lt;/span&gt; 
+          &lt;span name="extra_button2"&gt;&lt;/span&gt; 
+        &lt;/div&gt; 
+        &lt;div class="vf_create_button"&gt; 
+          &lt;span name="create_button"&gt;&lt;/span&gt; 
+        &lt;/div&gt; 
+&lt;/form&gt; 
+      
+&lt;div name="vf_footer" class="vf_footer"&gt;&lt;/div&gt; 
+    &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;/div&gt;
+   &lt;/BODY&gt;
+&lt;/HTML&gt;</Input>
+<Input name="PageNavTemplateDescription">This template is suitable for rendering a navigation list on a mobile device.</Input>
+<Input name="PageData">&lt;HTML&gt;
+   
+   &lt;HEAD &gt;
+   &lt;style&gt;
+   .script_provider_view {
+display: none;
+}
+#wefBody .script_provider_view {
+display: block;
+}
+.edit-mode .script_provider_view {
+display: block;
+} 
+&lt;/style&gt;
+
+   &lt;/HEAD&gt;
+   &lt;BODY id="wefBody"&gt;
+ &lt;div class="script_provider_view"&gt; 
+  &lt;div name="vf_view_container" class="vf_view_container"&gt; 
+   &lt;h2 class="blockHeading" name="page_header_text"&gt;Service Provider: demo/banking/data/BankingService&lt;/h2&gt; 
+   &lt;/div&gt;
+   &lt;/BODY&gt;
+&lt;/HTML&gt;</Input>
+</Inputs>
+</BuilderCall>
+<BuilderCall id="bc19"><BuilderDefID>com.bowstreet.builders.webapp.ClientJavaScriptBuilder</BuilderDefID>
+<Messages />
+<Inputs><Input name="BuilderCallEnabled">true</Input>
+<Input name="PageLocationType">Explicit</Input>
+<Input name="ScriptSourceType">Explicit</Input>
+<Input name="PageLocation"><SimplePageLocation><Page>main</Page>
+<NameSearch>wefBody</NameSearch>
+<InsertionModifier>InsideTop</InsertionModifier>
+<NewNodeName />
+</SimplePageLocation>
+</Input>
+<Input name="Script">var bankAccountsServiceUrls= {getAccounts: "${MethodCall/getAccountsGenerateRestUrl}",};</Input>
+</Inputs>
+</BuilderCall>
+</BuilderCallList>
+<Properties><Contained>false</Contained>
+</Properties>
+<Dependencies><Dependency type="File">/WEB-INF/samples/scripting/banking_accounts_summary.xml</Dependency>
+</Dependencies>
+<ExternalProperties><ExternalProperty id="PortletModel">true</ExternalProperty>
+<ExternalProperty id="PortletName">BankAccounts</ExternalProperty>
+<ExternalProperty id="PortletTitle">Banking Script Portlet Service Provider</ExternalProperty>
+<ExternalProperty id="PortletDefaultLocale">en</ExternalProperty>
+<ExternalProperty id="TestPortalPage"></ExternalProperty>
+<ExternalProperty id="PortletModeEdit">false</ExternalProperty>
+<ExternalProperty id="PortletModeEditDefaults">false</ExternalProperty>
+<ExternalProperty id="PortletModeConfig">false</ExternalProperty>
+<ExternalProperty id="PortletModeHelp">false</ExternalProperty>
+<ExternalProperty id="Service2Enabled">true</ExternalProperty>
+</ExternalProperties>
+</Model>

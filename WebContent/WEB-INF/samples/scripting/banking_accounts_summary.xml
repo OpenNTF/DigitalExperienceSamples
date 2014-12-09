@@ -1,0 +1,25 @@
+<accounts>
+  <accountSummary>
+    <accountName>Checking</accountName>
+    <accountNumber>1231231234</accountNumber>
+    <accountDescription>Primary checking</accountDescription>
+    <accountBalance>123.45</accountBalance>
+  </accountSummary>
+  <accountSummary>
+    <accountName>Preferred Savings</accountName>
+    <accountNumber>2342342345</accountNumber>
+    <accountDescription>Short-term savings</accountDescription>
+    <accountBalance>150.45</accountBalance>
+  </accountSummary>
+  <accountSummary>
+    <accountName>Investment</accountName>
+    <accountNumber>3453453456</accountNumber>
+    <accountDescription>Flexible investment account</accountDescription>
+    <accountBalance>244.33</accountBalance>
+  </accountSummary>
+<accountSummary>
+    <accountName>Stock Investment</accountName>
+    <accountNumber>3453453222</accountNumber>
+    <accountDescription>Secondary investment account</accountDescription>
+    <accountBalance>112.23</accountBalance>
+  </accountSummary></accounts>
