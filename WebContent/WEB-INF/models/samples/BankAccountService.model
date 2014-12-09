@@ -247,7 +247,7 @@ display: block;
    &lt;BODY id="wefBody"&gt;
  &lt;div class="script_provider_view"&gt; 
   &lt;div name="vf_view_container" class="vf_view_container"&gt; 
-   &lt;h2 class="blockHeading" name="page_header_text"&gt;Service Provider: demo/banking/data/BankingService&lt;/h2&gt; 
+   &lt;h2 class="blockHeading" name="page_header_text"&gt;Service Provider: samples/BankAccountService&lt;/h2&gt; 
    &lt;/div&gt;
    &lt;/BODY&gt;
 &lt;/HTML&gt;</Input>
@@ -265,6 +265,7 @@ display: block;
 </SimplePageLocation>
 </Input>
 <Input name="Script">var bankAccountsServiceUrls= {getAccounts: "${MethodCall/getAccountsGenerateRestUrl}",};</Input>
+<Input name="Name">Service Url variable</Input>
 </Inputs>
 </BuilderCall>
 </BuilderCallList>
